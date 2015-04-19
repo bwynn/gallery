@@ -1,11 +1,12 @@
 html,
 body,
-#galleryWrap {
+#galleryOuter {
   width: 100%;
 }
 
 html,
-body {
+body,
+#galleryWrap {
   height: 100%;
 }
 
@@ -24,7 +25,8 @@ a {
   color: white;
 }
 
-#galleryWrap {
+/* ==============================================*/
+#galleryOuter {
   height: 90%;
   background-color: #222;
 }

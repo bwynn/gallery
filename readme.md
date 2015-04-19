@@ -1,0 +1,1 @@
+This is a snippet build for a full width slider gallery. This responsive gallery is being built with the southwest project in mind, but is intended to be reused on other projects, and css is intended to be self contained.
