@@ -29,6 +29,13 @@ a {
 #galleryOuter {
   height: 90%;
   background-color: #222;
+  overflow: hidden;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+#galleryWrap {
+  width: 4500px;
 }
 
 #left {
@@ -47,6 +54,7 @@ figure.backgd {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  max-width: 1440px;
 }
 
 figure#one {
