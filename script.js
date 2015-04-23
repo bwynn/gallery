@@ -1,9 +1,19 @@
-var slide = function() {
-  var windowWidth = window.innerWidth;
-  return windowWidth;
-}
+var gallery = {
+  next: function(){console.log('toggle to next slide ' + windowSize)},
+  previous: function(){console.log('toggle to previous slide ' + windowSize)}
+};
 
-var gallerySlider = (function() {
-  var showNext = document.querySelectorAll('#right > a');
-  var showPrev = document.querySelectorAll('#left > a');
-})();
+var windowSize = function(){return window.innerWidth;}();
+
+var galleryCtrl = function() {
+  var leftPaddle = document.querySelector('#left a');
+  var rightPaddle = document.querySelector('#right a');
+
+  leftPaddle.addEventListener('click', function(e) {
+    return gallery.previous();
+  });
+
+  rightPaddle.addEventListener('click', function(e) {
+    return gallery.next();
+  });
+}();
