@@ -55,6 +55,7 @@ figure.backgd {
   background-repeat: no-repeat;
   background-size: cover;
   max-width: 1440px;
+  transform: translate(-500px,0);
 }
 
 figure#one {

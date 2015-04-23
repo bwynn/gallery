@@ -1,14 +1,26 @@
 // gallery object used to be called from the event handlers within the galleryCtrl
 // anonymous function below
 var gallery = {
-  next: function(){console.log('toggle to next slide ' + windowSize)},
-  previous: function(){console.log('toggle to previous slide ' + windowSize)}
+  next: function(){
+    // this will take the window width and use that number to advance the
+    // property of the translate style on the gallery figure elements
+    var width = windowSize();
+    var slide = document.querySelectorAll('figure.backgd');
+    slide.style.webkitTransform = 'translate(' + width + 'px,0)' + 'translateZ(0)';
+    slide.style.msTransform = 'translateX(' + width + 'px)';
+    slide.style.MozTransform = 'translateX(' + width + 'px)';
+    },
+  previous: function(){
+    // this will take the window width and use that number to decrement the
+    // property of the translate style on the gallery figure elements
+    console.log('toggle to previous slide ' + windowSize() );
+    }
 };
 
 // this anonymous function returns the pixel width of the viewport and
 // is intended to identify page-width when adjusting the translate style property
 // for the gallery
-var windowSize = function(){return window.innerWidth;}();
+var windowSize = function(){return window.innerWidth;};
 
 // self-invoked function returns access to the event handlers when the page loads
 var galleryCtrl = function() {
