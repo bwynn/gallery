@@ -2,13 +2,15 @@
 // anonymous function below
 var gallery = {
   next: function(){
-    // this will take the window width and use that number to advance the
-    // property of the translate style on the gallery figure elements
-    var width = windowSize();
-    var slide = document.querySelectorAll('figure.backgd');
-    slide.style.webkitTransform = 'translate(' + width + 'px,0)' + 'translateZ(0)';
+    var slide = document.querySelectorAll('#gallerywrap figure');
+      if (slide.classList.contains('slide')) {
+        slide.remove('slide');
+      } else {
+        slide.add('slide');
+      }
+    /*slide.style.webkitTransform = 'translate(' + width + 'px,0)' + 'translateZ(0)';
     slide.style.msTransform = 'translateX(' + width + 'px)';
-    slide.style.MozTransform = 'translateX(' + width + 'px)';
+    slide.style.MozTransform = 'translateX(' + width + 'px)';*/
     },
   previous: function(){
     // this will take the window width and use that number to decrement the

@@ -55,7 +55,6 @@ figure.backgd {
   background-repeat: no-repeat;
   background-size: cover;
   max-width: 1440px;
-  transform: translate(-500px,0);
 }
 
 figure#one {
@@ -68,6 +67,13 @@ figure#two {
 
 figure#three {
   background-image: url('img/gallery3.jpg');
+}
+
+.slide {
+  -webkit-transform: translate(-100%, 0);
+  -moz-transform: translate(-100%, 0);
+  -ms-transform: translate(-100%, 0);
+  transform: translate(-100%, 0);
 }
 
 #galleryWrap > nav {
