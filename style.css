@@ -27,7 +27,15 @@ a {
 
 /* ===================== Gallery styles =========================*/
 #galleryOuter {
-  height: 90%;
+  width: 100%;
+}
+
+#galleryWrap {
+  height: 100%;
+}
+
+#galleryOuter {
+  height: 100%;
   background-color: #222;
   overflow: hidden;
   max-width: 1280px;
