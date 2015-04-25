@@ -5,8 +5,12 @@ var gallery = {
     var slide = document.getElementById('galleryWrap');
       if (!slide.hasAttribute('style') ||
            slide.style.transform == 'translateX(0px)') {
+        slide.style.webkitTransform = 'translate(-900px,0px)';
+        slide.style.MozTransform = 'translateX(-900px)'
         slide.style.transform = 'translateX(-900px)';
       } else {
+        slide.style.webkitTransform = 'translate(-1800px,0px)';
+        slide.style.MozTransform = 'translateX(-1800px)';
         slide.style.transform = 'translateX(-1800px)';
       }
     },
@@ -15,8 +19,12 @@ var gallery = {
     // property of the translate style on the gallery figure elements
     var slide = document.getElementById('galleryWrap');
       if (slide.style.transform == 'translateX(-1800px)') {
+        slide.style.webkitTransform = 'translate(-900px,0px)';
+        slide.style.MozTransform = 'translateX(-900px)';
         slide.style.transform = 'translateX(-900px)';
       } else {
+        slide.style.webkitTransform = 'translate(0px,0px)';
+        slide.style.MozTransform = 'translateX(0px)';
         slide.style.transform = 'translateX(0px)';
       }
     }

@@ -25,7 +25,7 @@ a {
   color: white;
 }
 
-/* ==============================================*/
+/* ===================== Gallery styles =========================*/
 #galleryOuter {
   height: 90%;
   background-color: #222;
@@ -135,11 +135,15 @@ figure#three {
 }
 
 .chevron.left:before {
+  -webkit-transform: rotate(-135deg);
+  -moz-transform: rotate(-135deg);
   transform: rotate(-135deg);
   left: 18px;
 }
 
 .chevron.right:before {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
   transform: rotate(45deg);
   left: 8px;
 }
