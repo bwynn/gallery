@@ -30,12 +30,12 @@ a {
   height: 90%;
   background-color: #222;
   overflow: hidden;
-  max-width: 900px;
+  max-width: 1280px;
   margin: 0 auto;
 }
 
 #galleryWrap {
-  width: 4500px;
+  width: 3840px;
 }
 
 #left {
@@ -46,43 +46,37 @@ a {
   float: right;
 }
 
-figure {
+#galleryWrap > figure {
   height: 100%;
 }
 
-figure.backgd {
+#galleryWrap > figure.backgd {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  width: 900px;
+  max-width: 1280px;
   margin: 0;
   float: left;
 }
 
-figure#one {
+#galleryWrap > figure#one {
   background-image: url('img/gallery1.jpg');
 }
 
-figure#two {
+#galleryWrap > figure#two {
   background-image: url('img/gallery2.jpg');
 }
 
-figure#three {
+#galleryWrap > figure#three {
   background-image: url('img/gallery3.jpg');
-}
-
-.slide {
-  -webkit-transform: translate(-100%, 0);
-  -moz-transform: translate(-100%, 0);
-  -ms-transform: translate(-100%, 0);
-  transform: translate(-100%, 0);
 }
 
 #galleryOuter > nav {
   position: absolute;
   top: 10%;
   display: block;
-  width: 900px;
+  max-width: 1280px;
+  width: 100%;
   height: 70%;
 }
 
@@ -118,7 +112,12 @@ figure#three {
   display: block;
 }
 
-.chevron::before {
+
+#galleryOuter > #galleryWrap > figure.backgd {
+  width: 100%;
+}
+
+#galleryOuter .chevron::before {
 	border-style: solid;
   border-color: #444;
 	border-width: 0.45em 0.45em 0 0;
@@ -134,14 +133,14 @@ figure#three {
   top: 40px;
 }
 
-.chevron.left:before {
+#galleryOuter .chevron.left:before {
   -webkit-transform: rotate(-135deg);
   -moz-transform: rotate(-135deg);
   transform: rotate(-135deg);
   left: 18px;
 }
 
-.chevron.right:before {
+#galleryOuter .chevron.right:before {
   -webkit-transform: rotate(45deg);
   -moz-transform: rotate(45deg);
   transform: rotate(45deg);
