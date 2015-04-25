@@ -1,10 +1,24 @@
 // gallery object used to be called from the event handlers within the galleryCtrl
 // anonymous function below
 var gallery = {
-  next: function(){
+  setWidth: function() {
+    // This is next bit is to try to set the image size to the width of the viewport, as
+    // inheritance is preventing the ability to set a width of 100% without defaulting to the
+    // max width property set on the figure.backgd tags. Because I need the slider
+    // images to translate along with the viewport size as that is how the transform
+    // property is being assigned, once image size matches the viewport, we'll be in
+    // business... get it working before i worry too much about how clean this is.
     var imgSize = document.querySelectorAll('#galleryOuter > #galleryWrap > figure.backgd');
     var size = document.getElementById('galleryOuter').offsetWidth;
+
+    for (var i = 0; i < imgSize.length; i++) {
+      imgSize[i].style.width = '' + size + 'px';
+    }
+  },
+  next: function(){
+    var size = document.getElementById('galleryOuter').offsetWidth;
     var slide = document.getElementById('galleryWrap');
+
       if (!slide.hasAttribute('style') ||
            slide.style.transform == 'translateX(0px)') {
         slide.style.webkitTransition = '.5s ease-in-out';
@@ -20,20 +34,9 @@ var gallery = {
         slide.style.transform = 'translateX(-' + size*2 +'px)';
       }
     },
-    // This is next bit is to try to set the image size to the width of the viewport, as
-    // inheritance is preventing the ability to set a width of 100% without defaulting to the
-    // max width property set on the figure.backgd tags. Because I need the slider
-    // images to translate along with the viewport size as that is how the transform
-    // property is being assigned, once image size matches the viewport, we'll be in
-    // business... get it working before i worry too much about how clean this is.
-
-    // for (var i = 0; i < imgSize.length; i++) {
-    // imgSize[i].style.width = size;
-      }*/
   previous: function(){
     // this will take the window width and use that number to decrement the
     // property of the translate style on the gallery figure elements
-    var imgSize = document.querySelectorAll('#galleryOuter > #galleryWrap > figure.backgd');
     var size = document.getElementById('galleryOuter').offsetWidth;
     var slide = document.getElementById('galleryWrap');
       if (slide.style.transform == 'translateX(-' + size*2 + 'px)') {
@@ -63,10 +66,12 @@ var triggers = function() {
   var rightPaddle = document.querySelector('#right a');
 
   leftPaddle.addEventListener('click', function(e) {
-    return gallery.previous();
+    gallery.setWidth();
+    gallery.previous();
   },false);
 
   rightPaddle.addEventListener('click', function(e) {
-    return gallery.next();
+    gallery.setWidth();
+    gallery.next();
   },false);
 }();
