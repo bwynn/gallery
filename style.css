@@ -30,7 +30,7 @@ a {
   height: 90%;
   background-color: #222;
   overflow: hidden;
-  max-width: 1440px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
@@ -54,7 +54,9 @@ figure.backgd {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  max-width: 1440px;
+  width: 900px;
+  margin: 0;
+  float: left;
 }
 
 figure#one {
@@ -76,19 +78,19 @@ figure#three {
   transform: translate(-100%, 0);
 }
 
-#galleryWrap > nav {
+#galleryOuter > nav {
   position: absolute;
   top: 10%;
   display: block;
-  width: 100%;
+  width: 900px;
   height: 70%;
 }
 
-#galleryWrap > nav > ul {
+#galleryOuter > nav > ul {
   height: 100%;
 }
 
-#galleryWrap > nav > ul > li {
+#galleryOuter > nav > ul > li {
   height: 100px;
   width: 50px;
   position: relative;
@@ -96,7 +98,7 @@ figure#three {
   margin: 0 1%;
 }
 
-#galleryWrap > nav > ul > li > a {
+#galleryOuter > nav > ul > li > a {
   display: block;
   height: inherit;
   background: #fafafa;
@@ -107,11 +109,11 @@ figure#three {
   transition: .2s opacity ease-in-out;
 }
 
-#galleryWrap > nav > ul > li > a:hover {
+#galleryOuter > nav > ul > li > a:hover {
   opacity: .8;
 }
 
-#galleryWrap span {
+#galleryOuter span {
   content: '';
   display: block;
 }

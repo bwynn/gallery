@@ -2,20 +2,23 @@
 // anonymous function below
 var gallery = {
   next: function(){
-    var slide = document.querySelectorAll('#gallerywrap figure');
-      if (slide.classList.contains('slide')) {
-        slide.remove('slide');
+    var slide = document.getElementById('galleryWrap');
+      if (!slide.hasAttribute('style') ||
+           slide.style.transform == 'translateX(0px)') {
+        slide.style.transform = 'translateX(-900px)';
       } else {
-        slide.add('slide');
+        slide.style.transform = 'translateX(-1800px)';
       }
-    /*slide.style.webkitTransform = 'translate(' + width + 'px,0)' + 'translateZ(0)';
-    slide.style.msTransform = 'translateX(' + width + 'px)';
-    slide.style.MozTransform = 'translateX(' + width + 'px)';*/
     },
   previous: function(){
     // this will take the window width and use that number to decrement the
     // property of the translate style on the gallery figure elements
-    console.log('toggle to previous slide ' + windowSize() );
+    var slide = document.getElementById('galleryWrap');
+      if (slide.style.transform == 'translateX(-1800px)') {
+        slide.style.transform = 'translateX(-900px)';
+      } else {
+        slide.style.transform = 'translateX(0px)';
+      }
     }
 };
 
@@ -25,7 +28,7 @@ var gallery = {
 var windowSize = function(){return window.innerWidth;};
 
 // self-invoked function returns access to the event handlers when the page loads
-var galleryCtrl = function() {
+
   var leftPaddle = document.querySelector('#left a');
   var rightPaddle = document.querySelector('#right a');
 
@@ -36,4 +39,3 @@ var galleryCtrl = function() {
   rightPaddle.addEventListener('click', function(e) {
     return gallery.next();
   },false);
-}();
