@@ -28,7 +28,7 @@ var gallery = {
 var windowSize = function(){return window.innerWidth;};
 
 // self-invoked function returns access to the event handlers when the page loads
-
+var triggers = function() {
   var leftPaddle = document.querySelector('#left a');
   var rightPaddle = document.querySelector('#right a');
 
@@ -39,3 +39,4 @@ var windowSize = function(){return window.innerWidth;};
   rightPaddle.addEventListener('click', function(e) {
     return gallery.next();
   },false);
+}();
