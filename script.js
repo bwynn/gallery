@@ -2,12 +2,8 @@
 // anonymous function below
 var gallery = {
   setWidth: function() {
-    // This is next bit is to try to set the image size to the width of the viewport, as
-    // inheritance is preventing the ability to set a width of 100% without defaulting to the
-    // max width property set on the figure.backgd tags. Because I need the slider
-    // images to translate along with the viewport size as that is how the transform
-    // property is being assigned, once image size matches the viewport, we'll be in
-    // business... get it working before i worry too much about how clean this is.
+    // This iterates through the figure tags and changes the width property
+    // of the images when invoked, which happens to be upon user trigger.
     var imgSize = document.querySelectorAll('#galleryOuter > #galleryWrap > figure.backgd');
     var size = document.getElementById('galleryOuter').offsetWidth;
 
@@ -54,11 +50,6 @@ var gallery = {
       }
     }
 };
-
-// this anonymous function returns the pixel width of the viewport and
-// is intended to identify page-width when adjusting the translate style property
-// for the gallery
-var windowSize = function(){return window.innerWidth;};
 
 // self-invoked function returns access to the event handlers when the page loads
 var triggers = function() {
