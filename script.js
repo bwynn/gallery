@@ -16,6 +16,8 @@ var gallery = {
     var slides = $('.backgd');
     var dotnav = $(".dotnavwrap a");
 
+    dotnav.removeClass('active');
+
       // 3 slide gallery, basic logic determines slide positions
       // conditional statement determines current transform values applied to the
       // .backgd elements. Logical or condition determines between no style
@@ -42,13 +44,17 @@ var gallery = {
     } else {
       slides.css("transform", "translateX(0px)");
     }
-    // loop through dotnav anchor elements, remove active class from all elements and
-    // then set index to the next
   },
+
+  // switch case being used currently, but this functionality should
+  // be built based on the current number of gallery slides, building
+  // up the corresponding dotnav elements based on the total number
+  // of slides available.
   dotnav: function() {
     var dotnav = $(".dotnavwrap a");
     var size = $('#galleryOuter').width();
     var slides = $('.backgd');
+
     // switcher between the three dotnavs
     switch (dotnav) {
       case 0:
@@ -80,25 +86,16 @@ var triggers = function() {
   });
 }();
 
+// Dotnav event handler, calls on gallery.dotnav object function to
+// translate the slide to the selected corresponding index.
 //$(function(){
   var dotnav = $(".dotnavwrap a");
 
   // changes classes when user interacts with the dotnav anchor tag
   dotnav.on("click", function() {
-    var size = $('#galleryOuter').width();
-    var slides = $('.backgd');
-    // change classes
-    dotnav.removeClass("active");
-    $(this).addClass("active");
-    // switcher between the three dotnavs
-    if ($(this) == dotnav[0]) {
-      slides.css("transform", "translateX(0px)");
-    } else if ($(this) == dotnav[1]) {
-      slides.css("transform", "translateX(-" + size + "px)");
-    } else {
-      slides.css("transform", "translateX(-" + size*2 + "px)");
-    }
-
+    gallery.dotnav();
+    // with each click, translates the width of the viewport multiplied
+    // by the index of the dotnav element clicked on.
   });
 //}());
 
