@@ -27,7 +27,7 @@
 //    - dot navigation
 //       - bind the active state to a selected element
 //    - touch navigation
-//       - advance/previous state changes 
+//       - advance/previous state changes
 
 var slides = []; // slides array stores slide objects, passed in using api listed
 // below
@@ -70,6 +70,7 @@ function Gallery() {
       }                    // session instance
     }
 
+    // return current slide's index value 
     function index() {
       return arr.indexOf( selected ); // set var for the current index value
     }
