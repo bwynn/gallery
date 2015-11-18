@@ -5,10 +5,29 @@
 //    - active state change req'd
 
 //  - Gallery object
+//    - add slide object
+//    - default state
+//    - current slide
+//      - slide object
+//      - slide index
+//    - advance index
+//    - decrement index
+
+//  - DOM Generation
+//    - Append structure to target container
+//      - instantiate new Gallery object
+//      - add slides to gallery
+//    - Add paddle navigation to gallery
+//    - Add dotnav list items to gallery
+//      - set default states through class assignments in elements
+
+//  - Events
 //    - paddle navigation
+//       - bind advance and previous state change
 //    - dot navigation
-//    - create/build slides
+//       - bind the active state to a selected element
 //    - touch navigation
+//       - advance/previous state changes 
 
 var slides = []; // slides array stores slide objects, passed in using api listed
 // below
@@ -37,7 +56,7 @@ function Gallery() {
       arr[i].active = false;
     }
     // return with the first slide as active
-    arr[0].active = true;
+    arr[0].active = true; // sets the first gallery object with the active state
     console.log(arr);
   };
 
