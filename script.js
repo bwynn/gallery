@@ -1,103 +1,128 @@
-// gallery object used to be called from the event handlers within the galleryCtrl
-// anonymous function below
-var gallery = {
-  setWidth: function() {
-    // This iterates through the figure tags and changes the width property
-    // of the images when invoked, which happens to be upon user trigger.
-    var imgSize = $("#galleryOuter > #galleryWrap > figure.backgd");  //document.querySelectorAll('#galleryOuter > #galleryWrap > figure.backgd');
-    var size = $("#galleryOuter").width();  //document.getElementById('galleryOuter').offsetWidth;
+// Components:
+//  - Slide object
+//    - name
+//    - src
+//    - active state change req'd
 
-    for (var i = 0; i < imgSize.length; i++) {
-      $(imgSize[i]).css("width", size + "px");  // vanilla js //imgSize[i].style.width = '' + size + 'px';
+//  - Gallery object
+//    - add slide object
+//    - default state
+//    - current slide
+//      - slide object
+//      - slide index
+//    - advance index
+//    - decrement index
+
+//  - DOM Generation
+//    - Append structure to target container
+//      - instantiate new Gallery object
+//      - add slides to gallery
+//    - Add paddle navigation to gallery
+//    - Add dotnav list items to gallery
+//      - set default states through class assignments in elements
+
+//  - Events
+//    - paddle navigation
+//       - bind advance and previous state change
+//    - dot navigation
+//       - bind the active state to a selected element
+//    - touch navigation
+//       - advance/previous state changes
+
+var slides = []; // slides array stores slide objects, passed in using api listed
+// below
+
+function Slide() {
+  this.name; // name property
+  this.active = false; // default state - false, this property will act as the
+  // state switcher for the current gallery slide in the gallery.
+}
+
+function Gallery() {
+
+  this.addSlide = function( name, path, arr ) {
+    var slide = new Slide(); // invoke new slide object
+    slide.name = name; // get name as a string
+    slide.src = path; // get url path as a string
+    arr.push( slide ); // push the slide object into the slides array
+
+    console.log(arr);
+  };
+
+  // implemented as Gallery.defaultState.call(this, arr);
+  this.defaultSlideState = function( arr ) {
+    // set all active state values to false
+    for ( var i = 0; i < arr.length; i++ ) {
+      arr[i].active = false;
     }
-  },
-  next: function(){
-    var size = $('#galleryOuter').width();
-    var slides = $('.backgd');
-    var dotnav = $(".dotnavwrap a");
+    // return with the first slide as active
+    arr[0].active = true; // sets the first gallery object with the active state
+    console.log(arr);
+  };
 
-    dotnav.removeClass('active');
-
-      // 3 slide gallery, basic logic determines slide positions
-      // conditional statement determines current transform values applied to the
-      // .backgd elements. Logical or condition determines between no style
-      // value applied and style applied for boolean determinations
-      if (slides.css("transform") == "none" ||
-          slides.css("transform") == "matrix(1, 0, 0, 1, 0, 0)") {
-        slides.css("transform", "translateX(-" + size + "px)");
-      } else {
-        // translate to farthest slide
-        slides.css("transform", "translateX(-" + size*2 + "px)");
-      }
-    },
-  previous: function(){
-    // this will take the window width and use that number to decrement the
-    // property of the translate style on the gallery figure elements
-    var size = $('#galleryOuter').width();
-    var slides = $('.backgd');
-
-    // a reverse of the 3 slide gallery conditional from above, except
-    // no 'or' statement required, as style has already been applied
-    // by the time a user arrives at the far slide
-    if (slides.css("transform") == "matrix(1, 0, 0, 1, -" + size*2 + ", 0)") {
-      slides.css("transform", "translateX(-" + size + "px)");
-    } else {
-      slides.css("transform", "translateX(0px)");
+  // curSlide takes the gallery array object as a parameter, which controls
+  // session states and changes
+  this.currentSlide = function( arr ) {
+    var selected; // declare selected
+    for ( var i = 0; i < arr.length; i++ ) {
+      if ( arr[i].active === true ) { // if the slide object has a property with the active state === true
+        selected = arr[i]; // set selected var to the current slide to create a
+      }                    // session instance
     }
-  },
 
-  // switch case being used currently, but this functionality should
-  // be built based on the current number of gallery slides, building
-  // up the corresponding dotnav elements based on the total number
-  // of slides available.
-  dotnav: function() {
-    var dotnav = $(".dotnavwrap a");
-    var size = $('#galleryOuter').width();
-    var slides = $('.backgd');
-
-    // switcher between the three dotnavs
-    switch (dotnav) {
-      case 0:
-      slides.css("transform", "translateX(0px)");
-      break;
-      case 1:
-      slides.css("transform", "translateX(-" + size + "px)");
-      break;
-      case 2:
-      slides.css("transform", "translateX(-" + size*2 + "px)");
-      break;
+    // return current slide's index value
+    function index() {
+      return arr.indexOf( selected ); // set var for the current index value
     }
-  }
-};
 
-// self-invoked function returns access to the event handlers when the page loads
-var triggers = function() {
-  var leftPaddle = $('#left a');
-  var rightPaddle = $('#right a');
+    return {
+      selected: selected,
+      index: index
+    };
+  };
 
-  leftPaddle.on('click', function(e) {
-    gallery.setWidth();
-    gallery.previous();
-  });
+  // increment/advance to the next array object
+  this.advanceIndex = function() {
+    // if the index value is less than or equal to the array length value
+    if ( index < arr.length - 1 ) {
+      var newIdx = index += 1;
+      // clear out current active state
+      selected.active = false;
 
-  rightPaddle.on('click', function(e) {
-    gallery.setWidth();
-    gallery.next();
-  });
-}();
+      // assign new active state index
+      arr[newIdx].active = true;
+      console.log(arr);
+    }
+    else {
+      console.log("Last slide in the array");
+    }
+  };
 
-// Dotnav event handler, calls on gallery.dotnav object function to
-// translate the slide to the selected corresponding index.
-//$(function(){
-  var dotnav = $(".dotnavwrap a");
+  this.previousIndex = function() {
+    if (index >= 1) {
+      var newIdx = index -= 1;
 
-  // changes classes when user interacts with the dotnav anchor tag
-  dotnav.on("click", function() {
-    gallery.dotnav();
-    // with each click, translates the width of the viewport multiplied
-    // by the index of the dotnav element clicked on.
-  });
-//}());
+      // clear out active state
+      selected.active = false;
 
+      // new index assigned
+      arr[newIdx].active = true;
+      console.log(arr);
+    }
+    else {
+      return console.log("At the first slide, can't go back any further.");
+    }
+  };
 
-gallery.setWidth();
+  return {
+    addSlide: this.addSlide,
+    defaultSlideState: this.defaultSlideState,
+    currentSlide: this.currentSlide,
+    advanceIndex: this.advanceIndex,
+    previousIndex: this.previousIndex
+  };
+}
+
+var gallery = new Gallery(); // create new gallery object
+
+// gallery.addSlide("slide 1", "imgsrc.jpg", slides); // invocation of a new slide
