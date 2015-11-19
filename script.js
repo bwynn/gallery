@@ -145,7 +145,14 @@ function Gallery() {
   };
 }
 
+// SAMPLE SESSION FOR DEVELOPMENT PURPOSES
 // create new gallery object
 var gallery = new Gallery();
+gallery.addSlide("slide1", "img1.jpg", slides );
+gallery.addSlide("slide2", "img2.jpg", slides );
+gallery.addSlide("slide3", "img3.jpg", slides );
+gallery.addSlide("slide4", "img4.jpg", slides );
+gallery.defaultSlideState( slides );
+
 
 // gallery.addSlide("slide 1", "imgsrc.jpg", slides); // invocation of a new slide
