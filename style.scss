@@ -1,0 +1,20 @@
+body {
+  margin: 0;
+}
+
+#attach {
+  height: 500px;
+  width: 100%;
+}
+
+
+#gallery {
+  height: 100%;
+  width: 99%;
+  margin: 0 auto;
+  background-color: #444;
+  opacity: .8;
+  overflow: hidden;
+  position: relative;
+  z-index: 5;
+}

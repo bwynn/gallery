@@ -41,23 +41,37 @@ function Slide() {
 function Gallery() {
 
   this.addSlide = function( name, path, arr ) {
-    var slide = new Slide(); // invoke new slide object
-    slide.name = name; // get name as a string
-    slide.src = path; // get url path as a string
-    arr.push( slide ); // push the slide object into the slides array
+    // check parameters passed in are - string, string, array object
+    if ( typeof name == "string" && typeof path == "string" && Array.isArray( arr )) {
 
-    console.log(arr);
+      var slide = new Slide(); // invoke new slide object
+
+      slide.name = name; // get name as a string
+
+      slide.src = path; // get url path as a string
+
+      arr.push( slide ); // push the slide object into the slides array
+
+      console.log(arr); // just to double check while in development
+    }
+    else {
+      console.log("Ensure parameters passed in are: string, string, array"); // go fish
+    }
   };
 
   // implemented as Gallery.defaultState.call(this, arr);
   this.defaultSlideState = function( arr ) {
-    // set all active state values to false
-    for ( var i = 0; i < arr.length; i++ ) {
-      arr[i].active = false;
+    // check to see that the array has values assigned - slide objects
+    if ( arr.length > 0 ) {
+
+      // set all active state values to false, clearing out any current assignments
+      for ( var i = 0; i < arr.length; i++ ) {
+        arr[i].active = false;
+      }
+      // return with the first slide as active
+      arr[0].active = true; // sets the first gallery object with the active state
     }
-    // return with the first slide as active
-    arr[0].active = true; // sets the first gallery object with the active state
-    console.log(arr);
+    console.log( arr ); // quick double check
   };
 
   // curSlide takes the gallery array object as a parameter, which controls
@@ -72,7 +86,9 @@ function Gallery() {
 
     // return current slide's index value
     function index() {
-      return arr.indexOf( selected ); // set var for the current index value
+      if ( Array.isArray( arr ) ) {
+        return arr.indexOf( selected ); // set var for the current index value
+      }
     }
 
     return {
@@ -82,12 +98,14 @@ function Gallery() {
   };
 
   // increment/advance to the next array object
-  this.advanceIndex = function() {
+  this.advanceIndex = function( arr ) {
+    var getIndex = this.currentSlide( arr ).index() // get current slides index
+    var newIdx = getIndex += 1; // set new index
+
     // if the index value is less than or equal to the array length value
-    if ( index < arr.length - 1 ) {
-      var newIdx = index += 1;
+    if ( this.currentSlide( arr ).index() < arr.length - 1 ) {
       // clear out current active state
-      selected.active = false;
+      this.currentSlide(arr).selected.active = false;
 
       // assign new active state index
       arr[newIdx].active = true;
@@ -98,12 +116,16 @@ function Gallery() {
     }
   };
 
-  this.previousIndex = function() {
-    if (index >= 1) {
-      var newIdx = index -= 1;
+  this.previousIndex = function( arr ) {
+    var getIndex = this.currentSlide( arr ).index();
+
+    // if the current index is set to 1 or, select previous slide
+    if (getIndex >= 1) {
+      // newIdx value set to - 1
+      var newIdx = getIndex -= 1;
 
       // clear out active state
-      selected.active = false;
+      this.currentSlide(arr).selected.active = false;
 
       // new index assigned
       arr[newIdx].active = true;
@@ -115,14 +137,15 @@ function Gallery() {
   };
 
   return {
-    addSlide: this.addSlide,
-    defaultSlideState: this.defaultSlideState,
-    currentSlide: this.currentSlide,
-    advanceIndex: this.advanceIndex,
-    previousIndex: this.previousIndex
+    addSlide: this.addSlide, // return addSlide method
+    defaultSlideState: this.defaultSlideState, // return defaultSlideState method
+    currentSlide: this.currentSlide, // return currentSlide method
+    advanceIndex: this.advanceIndex, // advanceIndex
+    previousIndex: this.previousIndex // previousIndex
   };
 }
 
-var gallery = new Gallery(); // create new gallery object
+// create new gallery object
+var gallery = new Gallery();
 
 // gallery.addSlide("slide 1", "imgsrc.jpg", slides); // invocation of a new slide
