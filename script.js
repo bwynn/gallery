@@ -152,7 +152,7 @@ gallery.addSlide("slide1", "img1.jpg", slides );
 gallery.addSlide("slide2", "img2.jpg", slides );
 gallery.addSlide("slide3", "img3.jpg", slides );
 gallery.addSlide("slide4", "img4.jpg", slides );
-gallery.defaultSlideState( slides );
+gallery.defaultSlideState( slides ); // on init, this should be set as a promise, to execute asynchronously when a slide object is available 
 
 
 // gallery.addSlide("slide 1", "imgsrc.jpg", slides); // invocation of a new slide
