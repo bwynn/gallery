@@ -28,6 +28,7 @@
 //       - bind the active state to a selected element
 //    - touch navigation
 //       - advance/previous state changes
+"use strict"
 
 var slides = []; // slides array stores slide objects, passed in using api listed
 // below
@@ -136,18 +137,24 @@ function Gallery() {
     }
   };
 
-  this.createContainer = function( container ) {
-      var gallery = String()
-          + "<div id='gallery'>"
-            + "<div class='slides'></div>"
-            + "<div class='paddle-nav'>"
-              + "<div class='paddle paddle-left'></div>"
-              + "<div class='paddle paddle-right'></div>"
-            + "</div>"
-            + "<div class='dotnav'></div>"
-          + "</div>";
+  this.createContainer = function( container, arr ) {
+      // if slides are present
+      if ( arr.length > 0 ) {
+          var gallery = String()
+              + "<div id='gallery'>"
+                + "<div class='slides'></div>"
+                + "<div class='paddle-nav'>"
+                  + "<div class='paddle paddle-left'></div>"
+                  + "<div class='paddle paddle-right'></div>"
+                + "</div>"
+                + "<div class='dotnav'></div>"
+              + "</div>";
 
-      container.innerHTML = gallery;
+          container.innerHTML = gallery;
+      }
+      else {
+          console.log( "Need to create more slide objects using addSlide() method." );
+      }
   };
 
   return {
