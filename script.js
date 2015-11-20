@@ -136,12 +136,27 @@ function Gallery() {
     }
   };
 
+  this.createContainer = function( container ) {
+      var gallery = String()
+          + "<div id='gallery'>"
+            + "<div class='slides'></div>"
+            + "<div class='paddle-nav'>"
+              + "<div class='paddle paddle-left'></div>"
+              + "<div class='paddle paddle-right'></div>"
+            + "</div>"
+            + "<div class='dotnav'></div>"
+          + "</div>";
+
+      container.innerHTML = gallery;
+  };
+
   return {
     addSlide: this.addSlide, // return addSlide method
     defaultSlideState: this.defaultSlideState, // return defaultSlideState method
     currentSlide: this.currentSlide, // return currentSlide method
     advanceIndex: this.advanceIndex, // advanceIndex
-    previousIndex: this.previousIndex // previousIndex
+    previousIndex: this.previousIndex, // previousIndex
+    createContainer: this.createContainer // createContainer
   };
 }
 
@@ -152,7 +167,7 @@ gallery.addSlide("slide1", "img1.jpg", slides );
 gallery.addSlide("slide2", "img2.jpg", slides );
 gallery.addSlide("slide3", "img3.jpg", slides );
 gallery.addSlide("slide4", "img4.jpg", slides );
-gallery.defaultSlideState( slides ); // on init, this should be set as a promise, to execute asynchronously when a slide object is available 
+gallery.defaultSlideState( slides ); // on init, this should be set as a promise, to execute asynchronously when a slide object is available
 
 
 // gallery.addSlide("slide 1", "imgsrc.jpg", slides); // invocation of a new slide
