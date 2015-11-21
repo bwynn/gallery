@@ -34,7 +34,6 @@ var slides = []; // slides array stores slide objects, passed in using api liste
 // below
 
 function Slide() {
-  this.name; // name property
   this.active = false; // default state - false, this property will act as the
   // state switcher for the current gallery slide in the gallery.
 }
@@ -100,7 +99,7 @@ function Gallery() {
 
   // increment/advance to the next array object
   this.advanceIndex = function( arr ) {
-    var getIndex = this.currentSlide( arr ).index() // get current slides index
+    var getIndex = this.currentSlide( arr ).index(); // get current slides index
     var newIdx = getIndex += 1; // set new index
 
     // if the index value is less than or equal to the array length value
@@ -136,7 +135,7 @@ function Gallery() {
       return console.log("At the first slide, can't go back any further.");
     }
   };
-
+  
   this.createContainer = function( container, arr ) {
       // if slides are present
       if ( arr.length > 0 ) {
@@ -157,15 +156,39 @@ function Gallery() {
       }
   };
 
+  this.createSlides = function( arr ) {
+    var gal = document.getElementById("slides");
+    // array has slides in it?
+    if ( arr.length > 0 ) {
+      for ( var i = 0; i < arr.length; i++ ) {
+        var fig = document.createElement("FIGURE");
+        // create new element
+        gal.appendChild( fig );
+      }
+      var el = document.querySelectorAll("#slides > figure");
+      // if elements created and variable successful
+      if (el) {
+        for ( var i = 0; i < arr.length; i++ ) {
+          el[i].classList.add( arr[i].name );
+        }
+      }
+    }
+    else {
+      console.log("Slides needed.");
+    }
+  };
+
   return {
     addSlide: this.addSlide, // return addSlide method
     defaultSlideState: this.defaultSlideState, // return defaultSlideState method
     currentSlide: this.currentSlide, // return currentSlide method
     advanceIndex: this.advanceIndex, // advanceIndex
     previousIndex: this.previousIndex, // previousIndex
-    createContainer: this.createContainer // createContainer
+    createContainer: this.createContainer, // createContainer
+    createSlides: this.createSlides // createSlides
   };
 }
+
 
 // SAMPLE SESSION FOR DEVELOPMENT PURPOSES
 // create new gallery object
