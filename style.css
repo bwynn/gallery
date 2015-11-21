@@ -2,17 +2,30 @@ body {
   margin: 0; }
 
 #attach {
-  height: 500px;
+  height: 600px;
   width: 100%; }
 
 #gallery {
   height: 100%;
-  width: 99%;
+  width: 100%;
   margin: 0 auto;
   background-color: #444;
   opacity: .8;
   overflow: hidden;
   position: relative;
   z-index: 5; }
+
+#slides {
+  height: 100%; }
+  #slides .slide {
+    height: inherit;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    z-index: 2; }
+    #slides .slide.active {
+      left: 0;
+      z-index: 7; }
 
 /*# sourceMappingURL=style.css.map */

@@ -16,7 +16,8 @@
 //  - DOM Generation
 //    - Append structure to target container
 //      - instantiate new Gallery object
-//      - add slides to gallery
+//      - add slides elements to gallery
+//      - add class values to slides
 //    - Add paddle navigation to gallery
 //    - Add dotnav list items to gallery
 //      - set default states through class assignments in elements
@@ -28,7 +29,10 @@
 //       - bind the active state to a selected element
 //    - touch navigation
 //       - advance/previous state changes
-"use strict"
+(function strict() {
+  "use strict";
+}());
+
 
 var slides = []; // slides array stores slide objects, passed in using api listed
 // below
@@ -135,19 +139,19 @@ function Gallery() {
       return console.log("At the first slide, can't go back any further.");
     }
   };
-  
+
   this.createContainer = function( container, arr ) {
       // if slides are present
       if ( arr.length > 0 ) {
-          var gallery = String()
-              + "<div id='gallery'>"
-                + "<div class='slides'></div>"
-                + "<div class='paddle-nav'>"
-                  + "<div class='paddle paddle-left'></div>"
-                  + "<div class='paddle paddle-right'></div>"
-                + "</div>"
-                + "<div class='dotnav'></div>"
-              + "</div>";
+          var gallery = String() +
+               "<div id='gallery'>" +
+                 "<div id='slides'></div>" +
+                 "<div class='paddle-nav'>" +
+                   "<div class='paddle paddle-left'></div>" +
+                   "<div class='paddle paddle-right'></div>" +
+                 "</div>" +
+                 "<div class='dotnav'></div>" +
+               "</div>";
 
           container.innerHTML = gallery;
       }
@@ -157,24 +161,38 @@ function Gallery() {
   };
 
   this.createSlides = function( arr ) {
+
     var gal = document.getElementById("slides");
+
     // array has slides in it?
     if ( arr.length > 0 ) {
       for ( var i = 0; i < arr.length; i++ ) {
-        var fig = document.createElement("FIGURE");
+
+        var fig = document.createElement("FIGURE"); // create figure element
         // create new element
         gal.appendChild( fig );
       }
+
       var el = document.querySelectorAll("#slides > figure");
       // if elements created and variable successful
       if (el) {
-        for ( var i = 0; i < arr.length; i++ ) {
-          el[i].classList.add( arr[i].name );
+        for ( i = 0; i < arr.length; i++ ) {
+          // set default active state
+          if ( arr[i].active ) {
+            el[i].classList.add("active");
+          }
+          el[i].classList.add( arr[i].name, "slide" ); // cycle through array.name values to assign as class to element
+          el[i].style.background = "url('" + arr[i].src + "')"; // defining gallery slide image via arr.src prop
+          el[i].style.backgroundSize = "cover";
+          el[i].style.backgroundRepeat = "no-repeat";
         }
+      }
+      else {
+        console.log("Check el element is assigned to correct querySelectorAll value.");
       }
     }
     else {
-      console.log("Slides needed.");
+      console.log("createSlides function needs an array to be passed in as param");
     }
   };
 
@@ -193,11 +211,16 @@ function Gallery() {
 // SAMPLE SESSION FOR DEVELOPMENT PURPOSES
 // create new gallery object
 var gallery = new Gallery();
-gallery.addSlide("slide1", "img1.jpg", slides );
-gallery.addSlide("slide2", "img2.jpg", slides );
-gallery.addSlide("slide3", "img3.jpg", slides );
-gallery.addSlide("slide4", "img4.jpg", slides );
+gallery.addSlide("slide1", "img/img1.jpg", slides ); // addSlide along with slide name, image path, and project array
+gallery.addSlide("slide2", "img/img2.jpg", slides );
+gallery.addSlide("slide3", "img/img3.jpg", slides );
+gallery.addSlide("slide4", "img/img4.jpg", slides );
+gallery.addSlide("slide5", "img/img5.jpg", slides );
 gallery.defaultSlideState( slides ); // on init, this should be set as a promise, to execute asynchronously when a slide object is available
+var el = document.getElementById("attach");
+gallery.createContainer( el, slides );
+gallery.createSlides( slides );
+
 
 
 // gallery.addSlide("slide 1", "imgsrc.jpg", slides); // invocation of a new slide
