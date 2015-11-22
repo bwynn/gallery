@@ -150,7 +150,9 @@ function Gallery() {
                    "<div class='paddle paddle-left'></div>" +
                    "<div class='paddle paddle-right'></div>" +
                  "</div>" +
-                 "<div class='dotnav'></div>" +
+                 "<div class='dotnav'>" +
+                  "<ul></ul>" +
+                 "</div>" +
                "</div>";
 
           container.innerHTML = gallery;
@@ -196,6 +198,18 @@ function Gallery() {
     }
   };
 
+  this.dotNav = function( arr ) {
+    var getUl = document.querySelector(".dotnav > ul");
+
+    if ( getUl ) {
+      // create all dotnav elements by looping through the array
+      for ( var i = 0; i < arr.length; i++ ) {
+        var li = document.createElement("li");
+        getUl.appendChild( li );
+      }
+    }
+  };
+
   return {
     addSlide: this.addSlide, // return addSlide method
     defaultSlideState: this.defaultSlideState, // return defaultSlideState method
@@ -203,7 +217,8 @@ function Gallery() {
     advanceIndex: this.advanceIndex, // advanceIndex
     previousIndex: this.previousIndex, // previousIndex
     createContainer: this.createContainer, // createContainer
-    createSlides: this.createSlides // createSlides
+    createSlides: this.createSlides, // createSlides
+    dotNav: this.dotNav
   };
 }
 
@@ -220,6 +235,7 @@ gallery.defaultSlideState( slides ); // on init, this should be set as a promise
 var el = document.getElementById("attach");
 gallery.createContainer( el, slides );
 gallery.createSlides( slides );
+gallery.dotNav( slides );
 
 
 
