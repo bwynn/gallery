@@ -23,5 +23,20 @@ body {
       left: 100%; }
       #slidify #slides .slide.active {
         left: 0; }
+  #slidify .paddle-nav {
+    position: absolute;
+    z-index: 10;
+    top: 40%;
+    height: 15%;
+    width: 100%;
+    display: -webkit-flex;
+    display: flex; }
+    #slidify .paddle-nav .paddle {
+      height: 100%;
+      width: 4em;
+      background-color: #888;
+      margin: 0 1em; }
+      #slidify .paddle-nav .paddle.paddle-right {
+        margin-left: auto; }
 
 /*# sourceMappingURL=style.css.map */

@@ -35,4 +35,25 @@ body {
       }
     }
   }
+  .paddle-nav {
+    position: absolute;
+    z-index: 10;
+    top: 40%;
+    height: 15%;
+    width: $hundo;
+    display: -webkit-flex;
+    display: flex;
+    .paddle {
+      height: $hundo;
+      width: 4em;
+      background-color: #888;
+      margin: 0 1em;
+      &.paddle-right {
+        margin-left: auto;
+      }
+      &.paddle-left {
+
+      }
+    }
+  }
 }
