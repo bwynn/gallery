@@ -114,6 +114,14 @@ function Gallery() {
       // assign new active state index
       arr[newIdx].active = true;
       console.log(arr);
+
+      // if idx of arr == newIdx
+      if ( this.currentSlide( arr ).index() == newIdx ) {
+        displaySlide( arr );
+      }
+      else {
+        console.log("conditional switcher inside advance index not working");
+      }
     }
     else {
       console.log("Last slide in the array");
@@ -134,6 +142,13 @@ function Gallery() {
       // new index assigned
       arr[newIdx].active = true;
       console.log(arr);
+
+      if ( this.currentSlide( arr ).index() == newIdx ) {
+        displaySlide( arr );
+      }
+      else {
+        console.log("something went wrong with the previous index conditional");
+      }
     }
     else {
       return console.log("At the first slide, can't go back any further.");
@@ -162,6 +177,8 @@ function Gallery() {
       }
   };
 
+  // this method invokes the generation of gallery slider, based on the presence
+  // of array slide objects.
   this.createSlides = function( arr ) {
 
     var gal = document.getElementById("slides");
@@ -174,24 +191,7 @@ function Gallery() {
         // create new element
         gal.appendChild( fig );
       }
-
-      var el = document.querySelectorAll("#slides > figure");
-      // if elements created and variable successful
-      if (el) {
-        for ( i = 0; i < arr.length; i++ ) {
-          // set default active state
-          if ( arr[i].active ) {
-            el[i].classList.add("active");
-          }
-          el[i].classList.add( arr[i].name, "slide" ); // cycle through array.name values to assign as class to element
-          el[i].style.background = "url('" + arr[i].src + "')"; // defining gallery slide image via arr.src prop
-          el[i].style.backgroundSize = "cover";
-          el[i].style.backgroundRepeat = "no-repeat";
-        }
-      }
-      else {
-        console.log("Check el element is assigned to correct querySelectorAll value.");
-      }
+      displaySlide( arr );
     }
     else {
       console.log("createSlides function needs an array to be passed in as param");
@@ -210,6 +210,35 @@ function Gallery() {
     }
   };
 
+  // this is a callback function to determine the slide index after a state change
+  // has taken place to display the current slide
+  function displaySlide( arr ) {
+    var el = document.querySelectorAll("#slides > figure");
+    // if elements created and variable successful
+    if (el) {
+      for ( i = 0; i < arr.length; i++ ) {
+        // clear out all active class assignments
+        el[i].classList.remove("active");
+        // set default active state
+        if ( arr[i].active ) {
+          el[i].classList.add("active");
+          el[i].style.zIndex = "7";
+        }
+        else {
+          el[i].style.zIndex = "2";
+        }
+        el[i].classList.add( arr[i].name, "slide" ); // cycle through array.name values to assign as class to element
+        el[i].style.background = "url('" + arr[i].src + "')"; // defining gallery slide image via arr.src prop
+        el[i].style.backgroundSize = "contain";
+        el[i].style.backgroundRepeat = "no-repeat";
+        el[i].style.backgroundPosition = "center";
+      }
+    }
+    else {
+      console.log("Check el element is assigned to correct querySelectorAll value.");
+    }
+  }
+
   return {
     addSlide: this.addSlide, // return addSlide method
     defaultSlideState: this.defaultSlideState, // return defaultSlideState method
@@ -226,17 +255,14 @@ function Gallery() {
 // SAMPLE SESSION FOR DEVELOPMENT PURPOSES
 // create new gallery object
 var gallery = new Gallery();
+// gallery.addSlide("slide 1", "imgsrc.jpg", slides); // invocation of a new slide
 gallery.addSlide("slide1", "img/img1.jpg", slides ); // addSlide along with slide name, image path, and project array
 gallery.addSlide("slide2", "img/img2.jpg", slides );
 gallery.addSlide("slide3", "img/img3.jpg", slides );
 gallery.addSlide("slide4", "img/img4.jpg", slides );
 gallery.addSlide("slide5", "img/img5.jpg", slides );
 gallery.defaultSlideState( slides ); // on init, this should be set as a promise, to execute asynchronously when a slide object is available
-var el = document.getElementById("attach");
-gallery.createContainer( el, slides );
-gallery.createSlides( slides );
-gallery.dotNav( slides );
-
-
-
-// gallery.addSlide("slide 1", "imgsrc.jpg", slides); // invocation of a new slide
+var el = document.getElementById("attach"); // set element declaration to with element to append gallery to
+gallery.createContainer( el, slides ); // create gallery container
+gallery.createSlides( slides ); // create slides
+gallery.dotNav( slides ); // create dotnav

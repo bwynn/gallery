@@ -14,7 +14,7 @@ body {
   height: $hundo;
   width: $hundo;
   margin: 0 auto;
-  background-color: #444;
+  // background-color: #444; // get rid of this for a transparent background;
   opacity: .8;
   overflow: hidden;
   position: relative;
@@ -24,15 +24,16 @@ body {
 #slides {
   height: $hundo;
   .slide {
+    width: $hundo;
     height: inherit;
     margin: 0;
-    position: relative;
+    position: absolute;
     top: 0;
     left: 100%;
-    z-index: 2;
+    //z-index: 2; - handling with js
     &.active {
       left: 0;
-      z-index: 7;
+      //z-index: 7; - handling with js
     }
   }
 }
