@@ -5,27 +5,23 @@ body {
   height: 600px;
   width: 100%; }
 
-#gallery {
+#slidify {
   height: 100%;
   width: 100%;
   margin: 0 auto;
-  background-color: #444;
-  opacity: .8;
   overflow: hidden;
   position: relative;
   z-index: 5; }
-
-#slides {
-  height: 100%; }
-  #slides .slide {
-    height: inherit;
-    margin: 0;
-    position: relative;
-    top: 0;
-    left: 100%;
-    z-index: 2; }
-    #slides .slide.active {
-      left: 0;
-      z-index: 7; }
+  #slidify #slides {
+    height: 100%; }
+    #slidify #slides .slide {
+      width: 100%;
+      height: inherit;
+      margin: 0;
+      position: absolute;
+      top: 0;
+      left: 100%; }
+      #slidify #slides .slide.active {
+        left: 0; }
 
 /*# sourceMappingURL=style.css.map */

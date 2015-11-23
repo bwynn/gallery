@@ -159,7 +159,7 @@ function Gallery() {
       // if slides are present
       if ( arr.length > 0 ) {
           var gallery = String() +
-               "<div id='gallery'>" +
+               "<div id='slidify'>" +
                  "<div id='slides'></div>" +
                  "<div class='paddle-nav'>" +
                    "<div class='paddle paddle-left'></div>" +
@@ -181,7 +181,7 @@ function Gallery() {
   // of array slide objects.
   this.createSlides = function( arr ) {
 
-    var gal = document.getElementById("slides");
+    var gal = document.querySelector("#slidify #slides");
 
     // array has slides in it?
     if ( arr.length > 0 ) {
@@ -199,7 +199,7 @@ function Gallery() {
   };
 
   this.dotNav = function( arr ) {
-    var getUl = document.querySelector(".dotnav > ul");
+    var getUl = document.querySelector("#slidify .dotnav > ul");
 
     if ( getUl ) {
       // create all dotnav elements by looping through the array
@@ -213,7 +213,7 @@ function Gallery() {
   // this is a callback function to determine the slide index after a state change
   // has taken place to display the current slide
   function displaySlide( arr ) {
-    var el = document.querySelectorAll("#slides > figure");
+    var el = document.querySelectorAll("#slidify #slides > figure");
     // if elements created and variable successful
     if (el) {
       for ( i = 0; i < arr.length; i++ ) {
