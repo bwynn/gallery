@@ -118,6 +118,7 @@ function Gallery() {
       // if idx of arr == newIdx
       if ( this.currentSlide( arr ).index() == newIdx ) {
         displaySlide( arr );
+        dotNavSlides( arr );
       }
       else {
         console.log("conditional switcher inside advance index not working");
@@ -145,6 +146,7 @@ function Gallery() {
 
       if ( this.currentSlide( arr ).index() == newIdx ) {
         displaySlide( arr );
+        dotNavSlides( arr );
       }
       else {
         console.log("something went wrong with the previous index conditional");
@@ -204,11 +206,26 @@ function Gallery() {
     if ( getUl ) {
       // create all dotnav elements by looping through the array
       for ( var i = 0; i < arr.length; i++ ) {
+
         var li = document.createElement("li");
+
         getUl.appendChild( li );
       }
+      dotNavSlides( arr );
     }
   };
+
+  function dotNavSlides( arr ) {
+    var items = document.querySelectorAll("#slidify .dotnav li");
+    for (var i = 0; i < arr.length; i++) {
+      if ( arr[i].active ) {
+        items[i].classList.add("active");
+      }
+      else {
+        items[i].classList.remove("active");
+      }
+    }
+  }
 
   // this is a callback function to determine the slide index after a state change
   // has taken place to display the current slide

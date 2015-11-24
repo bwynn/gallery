@@ -90,5 +90,7 @@ body {
         #slidify .dotnav ul li:hover {
           cursor: pointer;
           background-color: #999; }
+        #slidify .dotnav ul li.active {
+          background-color: #999; }
 
 /*# sourceMappingURL=style.css.map */

@@ -115,6 +115,9 @@ body {
           cursor: pointer;
           background-color: #999;
         }
+        &.active {
+          background-color: #999;
+        }
       }
     }
   }
