@@ -162,8 +162,8 @@ function Gallery() {
                "<div id='slidify'>" +
                  "<div id='slides'></div>" +
                  "<div class='paddle-nav'>" +
-                   "<div class='paddle paddle-left'></div>" +
-                   "<div class='paddle paddle-right'></div>" +
+                   "<a href='#' class='left'><div class='paddle paddle-left'></div></a>" +
+                   "<a href='#' class='right'><div class='paddle paddle-right'></div></a>" +
                  "</div>" +
                  "<div class='dotnav'>" +
                   "<ul></ul>" +

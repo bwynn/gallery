@@ -1,4 +1,5 @@
 $hundo: 100%;
+$transition: .3s all ease-in-out;
 
 body {
   margin: 0;
@@ -14,8 +15,6 @@ body {
   height: $hundo;
   width: $hundo;
   margin: 0 auto;
-  // background-color: #444; // get rid of this for a transparent background;
-  // opacity: .8;
   overflow: hidden;
   position: relative;
   z-index: 5;
@@ -28,10 +27,8 @@ body {
       position: absolute;
       top: 0;
       left: 100%;
-      //z-index: 2; - handling with js
       &.active {
         left: 0;
-        //z-index: 7; - handling with js
       }
     }
   }
@@ -43,16 +40,53 @@ body {
     width: $hundo;
     display: -webkit-flex;
     display: flex;
-    .paddle {
+    a {
+      display: block;
       height: $hundo;
-      width: 4em;
-      background-color: #888;
-      margin: 0 1em;
-      &.paddle-right {
+      &.right {
         margin-left: auto;
       }
-      &.paddle-left {
-
+      .paddle {
+        height: $hundo;
+        width: 4em;
+        margin: 0 1em;
+        overflow: hidden;
+        content: "";
+        display: block;
+        &:hover {
+          &::before {
+            border-color: #777;
+          }
+        }
+        &::before {
+          border-style: solid;
+          border-color: #444;
+          border-width: .25em .25em 0 0;
+          content: "";
+          display: inline-block;
+          height: 4em;
+          box-sizing: border-box;
+          position: relative;
+          transform: rotate(-45deg);
+          width: 4em;
+          vertical-align: top;
+          top: .8em;
+          -webkit-transition: $transition;
+          transition: $transition;
+        }
+        &.paddle-right {
+          &::before {
+            float: right;
+            right: 32px;
+            transform: rotate(45deg);
+          }
+        }
+        &.paddle-left {
+          &::before {
+            transform: rotate(-135deg);
+            left: 32px;
+          }
+        }
       }
     }
   }

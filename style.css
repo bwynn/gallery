@@ -31,12 +31,41 @@ body {
     width: 100%;
     display: -webkit-flex;
     display: flex; }
-    #slidify .paddle-nav .paddle {
-      height: 100%;
-      width: 4em;
-      background-color: #888;
-      margin: 0 1em; }
-      #slidify .paddle-nav .paddle.paddle-right {
+    #slidify .paddle-nav a {
+      display: block;
+      height: 100%; }
+      #slidify .paddle-nav a.right {
         margin-left: auto; }
+      #slidify .paddle-nav a .paddle {
+        height: 100%;
+        width: 4em;
+        margin: 0 1em;
+        overflow: hidden;
+        content: "";
+        display: block; }
+        #slidify .paddle-nav a .paddle:hover::before {
+          border-color: #777; }
+        #slidify .paddle-nav a .paddle::before {
+          border-style: solid;
+          border-color: #444;
+          border-width: .25em .25em 0 0;
+          content: "";
+          display: inline-block;
+          height: 4em;
+          box-sizing: border-box;
+          position: relative;
+          transform: rotate(-45deg);
+          width: 4em;
+          vertical-align: top;
+          top: .8em;
+          -webkit-transition: 0.3s all ease-in-out;
+          transition: 0.3s all ease-in-out; }
+        #slidify .paddle-nav a .paddle.paddle-right::before {
+          float: right;
+          right: 32px;
+          transform: rotate(45deg); }
+        #slidify .paddle-nav a .paddle.paddle-left::before {
+          transform: rotate(-135deg);
+          left: 32px; }
 
 /*# sourceMappingURL=style.css.map */
