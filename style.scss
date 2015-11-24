@@ -90,4 +90,32 @@ body {
       }
     }
   }
+  .dotnav {
+    position: absolute;
+    width: 100%;
+    //background-color: red;
+    bottom: 1em;
+    z-index: 12;
+    ul {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-justify-content: center;
+      justify-content: center;
+      li {
+        display: inline-block;
+        height: .75em;
+        width: .75em;
+        margin: 0 10px;
+        background-color: white;
+        border-radius: 50%;
+        box-shadow: 1px 2px 10px #222;
+        -webkit-transition: $transition;
+        transition: $transition;
+        &:hover {
+          cursor: pointer;
+          background-color: #999;
+        }
+      }
+    }
+  }
 }
