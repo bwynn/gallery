@@ -33,10 +33,6 @@
   "use strict";
 }());
 
-
-var slides = []; // slides array stores slide objects, passed in using api listed
-// below
-
 function Slide() {
   this.active = false; // default state - false, this property will act as the
   // state switcher for the current gallery slide in the gallery.
@@ -239,11 +235,8 @@ function Gallery() {
         // set default active state
         if ( arr[i].active ) {
           el[i].classList.add("active");
-          el[i].style.zIndex = "7";
         }
-        else {
-          el[i].style.zIndex = "2";
-        }
+
         el[i].classList.add( arr[i].name, "slide" ); // cycle through array.name values to assign as class to element
         el[i].style.background = "url('" + arr[i].src + "')"; // defining gallery slide image via arr.src prop
         el[i].style.backgroundSize = "contain";
@@ -272,6 +265,7 @@ function Gallery() {
 // SAMPLE SESSION FOR DEVELOPMENT PURPOSES
 // create new gallery object
 var gallery = new Gallery();
+var slides = []; // slides array stores slide objects
 // gallery.addSlide("slide 1", "imgsrc.jpg", slides); // invocation of a new slide
 gallery.addSlide("slide1", "img/img1.jpg", slides ); // addSlide along with slide name, image path, and project array
 gallery.addSlide("slide2", "img/img2.jpg", slides );
