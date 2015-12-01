@@ -40,7 +40,7 @@ function Slide() {
 
 function Gallery() {
 
-  this.addSlide = function( name, path, arr ) {
+  function addSlide( name, path, arr ) {
     // check parameters passed in are - string, string, array object
     if ( typeof name == "string" && typeof path == "string" && Array.isArray( arr )) {
 
@@ -60,7 +60,7 @@ function Gallery() {
   };
 
   // implemented as Gallery.defaultState.call(this, arr);
-  this.defaultSlideState = function( arr ) {
+  function defaultSlideState( arr ) {
     // check to see that the array has values assigned - slide objects
     if ( arr.length > 0 ) {
 
@@ -76,7 +76,7 @@ function Gallery() {
 
   // curSlide takes the gallery array object as a parameter, which controls
   // session states and changes
-  this.currentSlide = function( arr ) {
+  function currentSlide( arr ) {
     var selected; // declare selected
     for ( var i = 0; i < arr.length; i++ ) {
       if ( arr[i].active === true ) { // if the slide object has a property with the active state === true
@@ -98,21 +98,21 @@ function Gallery() {
   };
 
   // increment/advance to the next array object
-  this.advanceIndex = function( arr ) {
-    var getIndex = this.currentSlide( arr ).index(); // get current slides index
+  function advanceIndex( arr ) {
+    var getIndex = currentSlide( arr ).index(); // get current slides index
     var newIdx = getIndex += 1; // set new index
 
     // if the index value is less than or equal to the array length value
-    if ( this.currentSlide( arr ).index() < arr.length - 1 ) {
+    if ( currentSlide( arr ).index() < arr.length - 1 ) {
       // clear out current active state
-      this.currentSlide(arr).selected.active = false;
+      currentSlide(arr).selected.active = false;
 
       // assign new active state index
       arr[newIdx].active = true;
       console.log(arr);
 
       // if idx of arr == newIdx
-      if ( this.currentSlide( arr ).index() == newIdx ) {
+      if ( currentSlide( arr ).index() == newIdx ) {
         displaySlide( arr );
         dotNavSlides( arr );
       }
@@ -125,8 +125,8 @@ function Gallery() {
     }
   };
 
-  this.previousIndex = function( arr ) {
-    var getIndex = this.currentSlide( arr ).index();
+  function previousIndex( arr ) {
+    var getIndex = currentSlide( arr ).index();
 
     // if the current index is set to 1 or, select previous slide
     if (getIndex >= 1) {
@@ -134,13 +134,13 @@ function Gallery() {
       var newIdx = getIndex -= 1;
 
       // clear out active state
-      this.currentSlide(arr).selected.active = false;
+      currentSlide(arr).selected.active = false;
 
       // new index assigned
       arr[newIdx].active = true;
       console.log(arr);
 
-      if ( this.currentSlide( arr ).index() == newIdx ) {
+      if ( currentSlide( arr ).index() == newIdx ) {
         displaySlide( arr );
         dotNavSlides( arr );
       }
@@ -153,7 +153,7 @@ function Gallery() {
     }
   };
 
-  this.createContainer = function( container, arr ) {
+  function createContainer( container, arr ) {
       // if slides are present
       if ( arr.length > 0 ) {
           var gallery = String() +
@@ -177,7 +177,7 @@ function Gallery() {
 
   // this method invokes the generation of gallery slider, based on the presence
   // of array slide objects.
-  this.createSlides = function( arr ) {
+  function createSlides( arr ) {
 
     var gal = document.querySelector("#slidify #slides");
 
@@ -196,7 +196,7 @@ function Gallery() {
     }
   };
 
-  this.dotNav = function( arr ) {
+  function dotNav( arr ) {
     var getUl = document.querySelector("#slidify .dotnav > ul");
 
     if ( getUl ) {
@@ -235,6 +235,13 @@ function Gallery() {
         // set default active state
         if ( arr[i].active ) {
           el[i].classList.add("active");
+          Velocity( el[i], { left: "0%" }, { duration: 500 } );
+        }
+        else if ( i < currentSlide( arr ).index() ) {
+          Velocity( el[i], { left: "-100%" }, { duration: 500 } );
+        }
+        else {
+          Velocity( el[i], { left: "100%" }, { duration: 500 } );
         }
 
         el[i].classList.add( arr[i].name, "slide" ); // cycle through array.name values to assign as class to element
@@ -242,6 +249,7 @@ function Gallery() {
         el[i].style.backgroundSize = "contain";
         el[i].style.backgroundRepeat = "no-repeat";
         el[i].style.backgroundPosition = "center";
+
       }
     }
     else {
@@ -250,15 +258,44 @@ function Gallery() {
   }
 
   return {
-    addSlide: this.addSlide, // return addSlide method
-    defaultSlideState: this.defaultSlideState, // return defaultSlideState method
-    currentSlide: this.currentSlide, // return currentSlide method
-    advanceIndex: this.advanceIndex, // advanceIndex
-    previousIndex: this.previousIndex, // previousIndex
-    createContainer: this.createContainer, // createContainer
-    createSlides: this.createSlides, // createSlides
-    dotNav: this.dotNav
+    addSlide: addSlide, // return addSlide method
+    defaultSlideState: defaultSlideState, // return defaultSlideState method
+    currentSlide: currentSlide, // return currentSlide method
+    advanceIndex: advanceIndex, // advanceIndex
+    previousIndex: previousIndex, // previousIndex
+    createContainer: createContainer, // createContainer
+    createSlides: createSlides, // createSlides
+    dotNav: dotNav
   };
+}
+
+function slideEvent( obj ) {
+  function next( arr ) {
+    obj.advanceIndex.call(this, arr);
+  }
+
+  function prev( arr ) {
+    obj.previousIndex.call(this, arr);
+  }
+
+  return {
+    next: next,
+    prev: prev
+  };
+}
+
+function paddleHandler( obj, arr ) {
+  var rightBtn = document.querySelector(".paddle.paddle-right");
+  var leftBtn = document.querySelector(".paddle.paddle-left");
+
+  rightBtn.addEventListener("click", function(e) {
+    slideEvent( obj ).next( arr );
+  }, false );
+
+  leftBtn.addEventListener("click", function(e) {
+    slideEvent( obj ).prev( arr );
+  }, false );
+
 }
 
 
@@ -277,3 +314,4 @@ var el = document.getElementById("attach"); // set element declaration to with e
 gallery.createContainer( el, slides ); // create gallery container
 gallery.createSlides( slides ); // create slides
 gallery.dotNav( slides ); // create dotnav
+paddleHandler( gallery, slides ); // handle paddle navigation

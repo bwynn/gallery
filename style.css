@@ -21,8 +21,6 @@ body {
       position: absolute;
       top: 0;
       left: 100%; }
-      #slidify #slides .slide.active {
-        left: 0; }
   #slidify .paddle-nav {
     position: absolute;
     z-index: 10;
