@@ -265,7 +265,7 @@ function Gallery() {
     previousIndex: previousIndex, // previousIndex
     createContainer: createContainer, // createContainer
     createSlides: createSlides, // createSlides
-    dotNav: dotNav
+    dotNav: dotNav, // generate dotnav elements
   };
 }
 
@@ -295,9 +295,7 @@ function paddleHandler( obj, arr ) {
   leftBtn.addEventListener("click", function(e) {
     slideEvent( obj ).prev( arr );
   }, false );
-
 }
-
 
 // SAMPLE SESSION FOR DEVELOPMENT PURPOSES
 // create new gallery object
@@ -315,3 +313,4 @@ gallery.createContainer( el, slides ); // create gallery container
 gallery.createSlides( slides ); // create slides
 gallery.dotNav( slides ); // create dotnav
 paddleHandler( gallery, slides ); // handle paddle navigation
+setSlideEvent();
