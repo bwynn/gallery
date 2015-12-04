@@ -151,7 +151,7 @@ function Gallery() {
     else {
       return console.log("At the first slide, can't go back any further.");
     }
-  };
+  }
 
   function createContainer( container, arr ) {
       // if slides are present
@@ -179,16 +179,17 @@ function Gallery() {
   // of array slide objects.
   function createSlides( arr ) {
 
-    var gal = document.querySelector("#slidify #slides");
+    var gal = $("#slidify #slides");
 
     // array has slides in it?
     if ( arr.length > 0 ) {
       for ( var i = 0; i < arr.length; i++ ) {
 
-        var fig = document.createElement("FIGURE"); // create figure element
+        //var fig = $("figure"); // create figure element
         // create new element
-        gal.appendChild( fig );
+        gal.append("<figure/>");
       }
+
       displaySlide( arr );
     }
     else {
@@ -197,64 +198,119 @@ function Gallery() {
   };
 
   function dotNav( arr ) {
-    var getUl = document.querySelector("#slidify .dotnav > ul");
+    var getUl = $("#slidify .dotnav > ul");
 
     if ( getUl ) {
       // create all dotnav elements by looping through the array
       for ( var i = 0; i < arr.length; i++ ) {
 
-        var li = document.createElement("li");
+        getUl.append("<li>");
 
-        getUl.appendChild( li );
       }
+
       dotNavSlides( arr );
     }
   };
 
   function dotNavSlides( arr ) {
-    var items = document.querySelectorAll("#slidify .dotnav li");
-    for (var i = 0; i < arr.length; i++) {
+    var items = $("#slidify .dotnav li");
+    items.each(function(i) {
       if ( arr[i].active ) {
-        items[i].classList.add("active");
+        $(this).addClass("active");
       }
       else {
-        items[i].classList.remove("active");
+        $(this).removeClass("active");
       }
+    })
+  }
+
+  function dotNavEvent( arr ) {
+
+    if ( arr ) {
+      $(".dotnav ul li").on("click", function() {
+        var getIdx = $(".dotnav ul li").index( this );
+
+        $(".dotnav ul li").removeClass("active");
+
+        $(this).addClass("active");
+
+        for (var i = 0; i < arr.length; i++) {
+          arr[i].active = false;
+
+          arr[ getIdx ].active = true;
+        }
+
+        console.log(arr);
+
+        displaySlide( arr );
+
+      });
+    }
+    else {
+      console.log("pass in the slide array");
     }
   }
 
   // this is a callback function to determine the slide index after a state change
   // has taken place to display the current slide
   function displaySlide( arr ) {
-    var el = document.querySelectorAll("#slidify #slides > figure");
+    var el = $("#slidify #slides > figure");
     // if elements created and variable successful
     if (el) {
-      for ( i = 0; i < arr.length; i++ ) {
-        // clear out all active class assignments
-        el[i].classList.remove("active");
+
+      el.removeClass("active");
+
+      el.each(function(i) {
         // set default active state
         if ( arr[i].active ) {
-          el[i].classList.add("active");
-          Velocity( el[i], { left: "0%" }, { duration: 500 } );
+          $(this).addClass("active");
+          $(this).velocity({ left: "0%" }, { duration: 500 } );
         }
         else if ( i < currentSlide( arr ).index() ) {
-          Velocity( el[i], { left: "-100%" }, { duration: 500 } );
+          $(this).velocity({ left: "-100%" }, { duration: 500 } );
         }
         else {
-          Velocity( el[i], { left: "100%" }, { duration: 500 } );
+          $(this).velocity({ left: "100%" }, { duration: 500 } );
         }
 
         el[i].classList.add( arr[i].name, "slide" ); // cycle through array.name values to assign as class to element
-        el[i].style.background = "url('" + arr[i].src + "')"; // defining gallery slide image via arr.src prop
-        el[i].style.backgroundSize = "contain";
-        el[i].style.backgroundRepeat = "no-repeat";
-        el[i].style.backgroundPosition = "center";
-
-      }
+        $(this).css("backgroundImage", "url('" + arr[i].src + "')"); // defining gallery slide image via arr.src prop
+        $(this).css("backgroundSize", "cover");
+        $(this).css("backgroundRepeat", "no-repeat");
+        $(this).css("backgroundPosition", "center");
+      });
     }
     else {
       console.log("Check el element is assigned to correct querySelectorAll value.");
     }
+  }
+
+  function slideEvent( obj ) {
+    function next( arr ) {
+      obj.advanceIndex.call(this, arr);
+    }
+
+    function prev( arr ) {
+      obj.previousIndex.call(this, arr);
+    }
+
+    return {
+      next: next,
+      prev: prev
+    };
+  }
+
+  function paddleHandler( obj, arr ) {
+    var rightBtn = document.querySelector(".paddle.paddle-right");
+    var leftBtn = document.querySelector(".paddle.paddle-left");
+
+    rightBtn.addEventListener("click", function(e) {
+      slideEvent( obj ).next( arr );
+    }, false );
+
+    leftBtn.addEventListener("click", function(e) {
+      slideEvent( obj ).prev( arr );
+    }, false );
   }
 
   return {
@@ -266,35 +322,9 @@ function Gallery() {
     createContainer: createContainer, // createContainer
     createSlides: createSlides, // createSlides
     dotNav: dotNav, // generate dotnav elements
+    dotNavEvent: dotNavEvent, // register dotNavEvent
+    paddleHandler: paddleHandler
   };
-}
-
-function slideEvent( obj ) {
-  function next( arr ) {
-    obj.advanceIndex.call(this, arr);
-  }
-
-  function prev( arr ) {
-    obj.previousIndex.call(this, arr);
-  }
-
-  return {
-    next: next,
-    prev: prev
-  };
-}
-
-function paddleHandler( obj, arr ) {
-  var rightBtn = document.querySelector(".paddle.paddle-right");
-  var leftBtn = document.querySelector(".paddle.paddle-left");
-
-  rightBtn.addEventListener("click", function(e) {
-    slideEvent( obj ).next( arr );
-  }, false );
-
-  leftBtn.addEventListener("click", function(e) {
-    slideEvent( obj ).prev( arr );
-  }, false );
 }
 
 // SAMPLE SESSION FOR DEVELOPMENT PURPOSES
@@ -312,5 +342,5 @@ var el = document.getElementById("attach"); // set element declaration to with e
 gallery.createContainer( el, slides ); // create gallery container
 gallery.createSlides( slides ); // create slides
 gallery.dotNav( slides ); // create dotnav
-paddleHandler( gallery, slides ); // handle paddle navigation
-setSlideEvent();
+gallery.paddleHandler( gallery, slides ); // handle paddle navigation
+gallery.dotNavEvent( slides );
