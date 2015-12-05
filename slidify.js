@@ -40,6 +40,12 @@ function Slide() {
 
 function Gallery() {
 
+  var set = {
+    loop: function() {
+      return true;
+    }
+  };
+
   function addSlide( name, path, arr ) {
     // check parameters passed in are - string, string, array object
     if ( typeof name == "string" && typeof path == "string" && Array.isArray( arr )) {
@@ -57,7 +63,7 @@ function Gallery() {
     else {
       console.log("Ensure parameters passed in are: string, string, array"); // go fish
     }
-  };
+  }
 
   // implemented as Gallery.defaultState.call(this, arr);
   function defaultSlideState( arr ) {
@@ -72,7 +78,7 @@ function Gallery() {
       arr[0].active = true; // sets the first gallery object with the active state
     }
     console.log( arr ); // quick double check
-  };
+  }
 
   // curSlide takes the gallery array object as a parameter, which controls
   // session states and changes
@@ -95,7 +101,7 @@ function Gallery() {
       selected: selected,
       index: index
     };
-  };
+  }
 
   // increment/advance to the next array object
   function advanceIndex( arr ) {
@@ -123,7 +129,7 @@ function Gallery() {
     else {
       console.log("Last slide in the array");
     }
-  };
+  }
 
   function previousIndex( arr ) {
     var getIndex = currentSlide( arr ).index();
@@ -151,7 +157,7 @@ function Gallery() {
     else {
       return console.log("At the first slide, can't go back any further.");
     }
-  };
+  }
 
   function createContainer( container, arr ) {
       // if slides are present
@@ -173,11 +179,11 @@ function Gallery() {
       else {
           console.log( "Need to create more slide objects using addSlide() method." );
       }
-  };
+  }
 
   // this method invokes the generation of gallery slider, based on the presence
   // of array slide objects.
-  function createSlides( arr ) {
+  function createSlides( arr, timing ) {
 
     var gal = document.querySelector("#slidify #slides");
 
@@ -189,12 +195,12 @@ function Gallery() {
         // create new element
         gal.appendChild( fig );
       }
-      displaySlide( arr );
+      displaySlide( arr, timing );
     }
     else {
       console.log("createSlides function needs an array to be passed in as param");
     }
-  };
+  }
 
   function dotNav( arr ) {
     var getUl = document.querySelector("#slidify .dotnav > ul");
@@ -209,7 +215,7 @@ function Gallery() {
       }
       dotNavSlides( arr );
     }
-  };
+  }
 
   function dotNavSlides( arr ) {
     var items = document.querySelectorAll("#slidify .dotnav li");
@@ -225,7 +231,7 @@ function Gallery() {
 
   // this is a callback function to determine the slide index after a state change
   // has taken place to display the current slide
-  function displaySlide( arr ) {
+  function displaySlide( arr, timing, easeStr ) {
     var el = document.querySelectorAll("#slidify #slides > figure");
     // if elements created and variable successful
     if (el) {
@@ -235,21 +241,20 @@ function Gallery() {
         // set default active state
         if ( arr[i].active ) {
           el[i].classList.add("active");
-          Velocity( el[i], { left: "0%" }, { duration: 500 } );
+          Velocity( el[i], { left: "0%" }, { duration: timing });
         }
         else if ( i < currentSlide( arr ).index() ) {
-          Velocity( el[i], { left: "-100%" }, { duration: 500 } );
+          Velocity( el[i], { left: "-100%" }, { duration: timing });
         }
         else {
-          Velocity( el[i], { left: "100%" }, { duration: 500 } );
+          Velocity( el[i], { left: "100%" }, { duration: timing });
         }
 
         el[i].classList.add( arr[i].name, "slide" ); // cycle through array.name values to assign as class to element
         el[i].style.background = "url('" + arr[i].src + "')"; // defining gallery slide image via arr.src prop
-        el[i].style.backgroundSize = "contain";
+        el[i].style.backgroundSize = "cover";
         el[i].style.backgroundRepeat = "no-repeat";
         el[i].style.backgroundPosition = "center";
-
       }
     }
     else {
@@ -327,6 +332,7 @@ function Gallery() {
   }
 
   return {
+    set: set, // return set object to allow for custom tuning
     addSlide: addSlide, // return addSlide method
     defaultSlideState: defaultSlideState, // return defaultSlideState method
     currentSlide: currentSlide, // return currentSlide method
@@ -353,7 +359,7 @@ gallery.addSlide("slide4", "img/img4.jpg", slides );
 gallery.addSlide("slide5", "img/img5.jpg", slides );
 gallery.defaultSlideState( slides ); // on init, this should be set as a promise, to execute asynchronously when a slide object is available
 gallery.createContainer( el, slides ); // create gallery container
-gallery.createSlides( slides ); // create slides
+gallery.createSlides( slides, 300 ); // create slides
 gallery.paddleHandler( gallery, slides ); // handle paddle navigation
 gallery.dotNav( slides ); // create dotnav
-gallery.dotNavEvent( slides ); // handle dotNavEvent 
+gallery.dotNavEvent( slides ); // handle dotNavEvent
