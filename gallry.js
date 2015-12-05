@@ -40,11 +40,11 @@ function Slide() {
 
 function Gallery() {
 
-  var set = {
-    loop: function() {
-      return true;
-    }
-  };
+  var prefs = {
+    timing: 300,
+    easing: "ease",
+    loop: false
+  }
 
   function addSlide( name, path, arr ) {
     // check parameters passed in are - string, string, array object
@@ -126,6 +126,14 @@ function Gallery() {
         console.log("conditional switcher inside advance index not working");
       }
     }
+    // set loop properties
+    else if ( prefs.loop === true ) {
+      currentSlide( arr ).selected.active = false;
+      arr[0].active = true;
+
+      displaySlide( arr );
+      dotNavSlides( arr );
+    }
     else {
       console.log("Last slide in the array");
     }
@@ -153,6 +161,18 @@ function Gallery() {
       else {
         console.log("something went wrong with the previous index conditional");
       }
+    }
+    // set loop properties
+    else if ( prefs.loop === true ) {
+      // set index to end of slide
+      var newIdx = arr.length - 1;
+      // set current slide active state to false
+      currentSlide( arr ).selected.active = false;
+      // set new index value
+      arr[newIdx].active = true;
+
+      displaySlide( arr ); // invoke
+      dotNavSlides( arr ); // invoke
     }
     else {
       return console.log("At the first slide, can't go back any further.");
@@ -231,7 +251,7 @@ function Gallery() {
 
   // this is a callback function to determine the slide index after a state change
   // has taken place to display the current slide
-  function displaySlide( arr, timing, easeStr ) {
+  function displaySlide( arr ) {
     var el = document.querySelectorAll("#slidify #slides > figure");
     // if elements created and variable successful
     if (el) {
@@ -241,13 +261,13 @@ function Gallery() {
         // set default active state
         if ( arr[i].active ) {
           el[i].classList.add("active");
-          Velocity( el[i], { left: "0%" }, { duration: timing });
+          Velocity( el[i], { left: "0%" }, { duration: prefs.timing, easing: prefs.easing });
         }
         else if ( i < currentSlide( arr ).index() ) {
-          Velocity( el[i], { left: "-100%" }, { duration: timing });
+          Velocity( el[i], { left: "-100%" }, { duration: prefs.timing, easing: prefs.easing });
         }
         else {
-          Velocity( el[i], { left: "100%" }, { duration: timing });
+          Velocity( el[i], { left: "100%" }, { duration: prefs.timing, easing: prefs.easing });
         }
 
         el[i].classList.add( arr[i].name, "slide" ); // cycle through array.name values to assign as class to element
@@ -331,18 +351,36 @@ function Gallery() {
     }
   }
 
+  // customize gallery characteristics
+  function preferences( timing, easing, loop ) {
+    if ( timing ) {
+      prefs.timing = timing;
+    }
+
+    if ( easing && typeof easing === "string" ) {
+      prefs.easing = easing;
+    }
+
+    if ( loop && typeof loop === "boolean" ) {
+      prefs.loop = loop;
+    }
+  }
+
+  function init( obj, arr, el ) {
+    defaultSlideState( arr ); // on init, this should be set as a promise, to execute asynchronously when a slide object is available
+    createContainer( el, arr ); // create gallery container
+    createSlides( arr ); // create slides
+    paddleHandler( obj, arr ); // handle paddle navigation
+    dotNav( arr ); // create dotnav
+    dotNavEvent( arr ); // handle dotNavEvent
+  }
+
   return {
-    set: set, // return set object to allow for custom tuning
+    preferences: preferences, // preferences object to control timing, easing and loops
     addSlide: addSlide, // return addSlide method
-    defaultSlideState: defaultSlideState, // return defaultSlideState method
-    currentSlide: currentSlide, // return currentSlide method
     advanceIndex: advanceIndex, // advanceIndex
     previousIndex: previousIndex, // previousIndex
-    createContainer: createContainer, // createContainer
-    createSlides: createSlides, // createSlides
-    dotNav: dotNav, // generate dotnav elements
-    paddleHandler: paddleHandler,
-    dotNavEvent: dotNavEvent
+    init: init // initialize gallery - takes new Gallery object, array and element to attach arguments.
   };
 }
 
@@ -357,9 +395,4 @@ gallery.addSlide("slide2", "img/img2.jpg", slides );
 gallery.addSlide("slide3", "img/img3.jpg", slides );
 gallery.addSlide("slide4", "img/img4.jpg", slides );
 gallery.addSlide("slide5", "img/img5.jpg", slides );
-gallery.defaultSlideState( slides ); // on init, this should be set as a promise, to execute asynchronously when a slide object is available
-gallery.createContainer( el, slides ); // create gallery container
-gallery.createSlides( slides, 300 ); // create slides
-gallery.paddleHandler( gallery, slides ); // handle paddle navigation
-gallery.dotNav( slides ); // create dotnav
-gallery.dotNavEvent( slides ); // handle dotNavEvent
+gallery.init( gallery, slides, el ); // initialize gallery
