@@ -29,9 +29,6 @@
 //       - bind the active state to a selected element
 //    - touch navigation
 //       - advance/previous state changes
-(function strict() {
-  "use strict";
-}());
 
 function Slide() {
   this.active = false; // default state - false, this property will act as the
@@ -40,11 +37,13 @@ function Slide() {
 
 function Gallery() {
 
+  "use strict";
+
   var prefs = {
     timing: 300,
     easing: "ease",
     loop: false
-  }
+  };
 
   function addSlide( name, path, arr ) {
     // check parameters passed in are - string, string, array object
@@ -165,11 +164,11 @@ function Gallery() {
     // set loop properties
     else if ( prefs.loop === true ) {
       // set index to end of slide
-      var newIdx = arr.length - 1;
+      var curIdx = arr.length - 1;
       // set current slide active state to false
       currentSlide( arr ).selected.active = false;
       // set new index value
-      arr[newIdx].active = true;
+      arr[curIdx].active = true;
 
       displaySlide( arr ); // invoke
       dotNavSlides( arr ); // invoke
@@ -255,7 +254,7 @@ function Gallery() {
     var el = document.querySelectorAll("#slidify #slides > figure");
     // if elements created and variable successful
     if (el) {
-      for ( i = 0; i < arr.length; i++ ) {
+      for ( var i = 0; i < arr.length; i++ ) {
         // clear out all active class assignments
         el[i].classList.remove("active");
         // set default active state
@@ -323,7 +322,7 @@ function Gallery() {
     var getIdx = indexes.indexOf( target );
 
 
-    for (var i = 0; i < arr.length; i++) {
+    for (i = 0; i < arr.length; i++) {
       arr[i].active = false;
 
       arr[ getIdx ].active = true;
@@ -337,7 +336,6 @@ function Gallery() {
 
     if ( arr ) {
       for ( var i = 0; i < arr.length; i++ ) {
-
         navlink[i].addEventListener("click", function( e ) {
 
           activeClassState( navlink, this, arr ); // callback function
@@ -345,7 +343,7 @@ function Gallery() {
           displaySlide( arr );
         });
       }
-    }
+      }
     else {
       console.log("pass in the slide array");
     }
