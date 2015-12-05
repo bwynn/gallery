@@ -151,7 +151,7 @@ function Gallery() {
     else {
       return console.log("At the first slide, can't go back any further.");
     }
-  }
+  };
 
   function createContainer( container, arr ) {
       // if slides are present
@@ -179,17 +179,16 @@ function Gallery() {
   // of array slide objects.
   function createSlides( arr ) {
 
-    var gal = $("#slidify #slides");
+    var gal = document.querySelector("#slidify #slides");
 
     // array has slides in it?
     if ( arr.length > 0 ) {
       for ( var i = 0; i < arr.length; i++ ) {
 
-        //var fig = $("figure"); // create figure element
+        var fig = document.createElement("FIGURE"); // create figure element
         // create new element
-        gal.append("<figure/>");
+        gal.appendChild( fig );
       }
-
       displaySlide( arr );
     }
     else {
@@ -198,87 +197,60 @@ function Gallery() {
   };
 
   function dotNav( arr ) {
-    var getUl = $("#slidify .dotnav > ul");
+    var getUl = document.querySelector("#slidify .dotnav > ul");
 
     if ( getUl ) {
       // create all dotnav elements by looping through the array
       for ( var i = 0; i < arr.length; i++ ) {
 
-        getUl.append("<li>");
+        var li = document.createElement("li");
 
+        getUl.appendChild( li );
       }
-
       dotNavSlides( arr );
     }
   };
 
   function dotNavSlides( arr ) {
-    var items = $("#slidify .dotnav li");
-    items.each(function(i) {
+    var items = document.querySelectorAll("#slidify .dotnav li");
+    for (var i = 0; i < arr.length; i++) {
       if ( arr[i].active ) {
-        $(this).addClass("active");
+        items[i].classList.add("active");
       }
       else {
-        $(this).removeClass("active");
+        items[i].classList.remove("active");
       }
-    })
-  }
-
-  function dotNavEvent( arr ) {
-
-    if ( arr ) {
-      $(".dotnav ul li").on("click", function() {
-        var getIdx = $(".dotnav ul li").index( this );
-
-        $(".dotnav ul li").removeClass("active");
-
-        $(this).addClass("active");
-
-        for (var i = 0; i < arr.length; i++) {
-          arr[i].active = false;
-
-          arr[ getIdx ].active = true;
-        }
-
-        console.log(arr);
-
-        displaySlide( arr );
-
-      });
-    }
-    else {
-      console.log("pass in the slide array");
     }
   }
 
   // this is a callback function to determine the slide index after a state change
   // has taken place to display the current slide
   function displaySlide( arr ) {
-    var el = $("#slidify #slides > figure");
+    var el = document.querySelectorAll("#slidify #slides > figure");
     // if elements created and variable successful
     if (el) {
-
-      el.removeClass("active");
-
-      el.each(function(i) {
+      for ( i = 0; i < arr.length; i++ ) {
+        // clear out all active class assignments
+        el[i].classList.remove("active");
         // set default active state
         if ( arr[i].active ) {
-          $(this).addClass("active");
-          $(this).velocity({ left: "0%" }, { duration: 500 } );
+          el[i].classList.add("active");
+          Velocity( el[i], { left: "0%" }, { duration: 500 } );
         }
         else if ( i < currentSlide( arr ).index() ) {
-          $(this).velocity({ left: "-100%" }, { duration: 500 } );
+          Velocity( el[i], { left: "-100%" }, { duration: 500 } );
         }
         else {
-          $(this).velocity({ left: "100%" }, { duration: 500 } );
+          Velocity( el[i], { left: "100%" }, { duration: 500 } );
         }
 
         el[i].classList.add( arr[i].name, "slide" ); // cycle through array.name values to assign as class to element
-        $(this).css("backgroundImage", "url('" + arr[i].src + "')"); // defining gallery slide image via arr.src prop
-        $(this).css("backgroundSize", "cover");
-        $(this).css("backgroundRepeat", "no-repeat");
-        $(this).css("backgroundPosition", "center");
-      });
+        el[i].style.background = "url('" + arr[i].src + "')"; // defining gallery slide image via arr.src prop
+        el[i].style.backgroundSize = "contain";
+        el[i].style.backgroundRepeat = "no-repeat";
+        el[i].style.backgroundPosition = "center";
+
+      }
     }
     else {
       console.log("Check el element is assigned to correct querySelectorAll value.");
@@ -313,6 +285,47 @@ function Gallery() {
     }, false );
   }
 
+  function activeClassState( el, target, arr ) {
+    //var navlink = document.querySelectorAll(".dotnav ul li");
+    for (var i = 0; i < el.length; i++) {
+      el[i].classList.remove("active");
+    }
+
+    target.classList.add("active");
+
+    //var getIdx = $(".dotnav ul li").index( this );
+    var indexes = Array.prototype.slice.call( el );
+    var getIdx = indexes.indexOf( target );
+
+
+    for (var i = 0; i < arr.length; i++) {
+      arr[i].active = false;
+
+      arr[ getIdx ].active = true;
+    }
+
+    console.log(arr);
+  }
+
+  function dotNavEvent( arr ) {
+    var navlink = document.querySelectorAll(".dotnav ul li");
+
+    if ( arr ) {
+      for ( var i = 0; i < arr.length; i++ ) {
+
+        navlink[i].addEventListener("click", function( e ) {
+
+          activeClassState( navlink, this, arr ); // callback function
+
+          displaySlide( arr );
+        });
+      }
+    }
+    else {
+      console.log("pass in the slide array");
+    }
+  }
+
   return {
     addSlide: addSlide, // return addSlide method
     defaultSlideState: defaultSlideState, // return defaultSlideState method
@@ -322,8 +335,8 @@ function Gallery() {
     createContainer: createContainer, // createContainer
     createSlides: createSlides, // createSlides
     dotNav: dotNav, // generate dotnav elements
-    dotNavEvent: dotNavEvent, // register dotNavEvent
-    paddleHandler: paddleHandler
+    paddleHandler: paddleHandler,
+    dotNavEvent: dotNavEvent
   };
 }
 
@@ -331,6 +344,7 @@ function Gallery() {
 // create new gallery object
 var gallery = new Gallery();
 var slides = []; // slides array stores slide objects
+var el = document.getElementById("attach"); // set element declaration to with element to append gallery to
 // gallery.addSlide("slide 1", "imgsrc.jpg", slides); // invocation of a new slide
 gallery.addSlide("slide1", "img/img1.jpg", slides ); // addSlide along with slide name, image path, and project array
 gallery.addSlide("slide2", "img/img2.jpg", slides );
@@ -338,9 +352,8 @@ gallery.addSlide("slide3", "img/img3.jpg", slides );
 gallery.addSlide("slide4", "img/img4.jpg", slides );
 gallery.addSlide("slide5", "img/img5.jpg", slides );
 gallery.defaultSlideState( slides ); // on init, this should be set as a promise, to execute asynchronously when a slide object is available
-var el = document.getElementById("attach"); // set element declaration to with element to append gallery to
 gallery.createContainer( el, slides ); // create gallery container
 gallery.createSlides( slides ); // create slides
-gallery.dotNav( slides ); // create dotnav
 gallery.paddleHandler( gallery, slides ); // handle paddle navigation
-gallery.dotNavEvent( slides );
+gallery.dotNav( slides ); // create dotnav
+gallery.dotNavEvent( slides ); // handle dotNavEvent 
