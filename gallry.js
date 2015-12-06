@@ -349,6 +349,56 @@ function Gallery() {
     }
   }
 
+  function touchEvents( arr ) {
+    var cont = document.getElementById("slidify");
+
+    var start = 0;
+    var dist = [];
+
+    cont.addEventListener("touchstart", function( e ) {
+      var touchObj = e.changedTouches[0];
+      var start = parseInt(touchObj.clientX);
+
+      e.preventDefault();
+    });
+
+    cont.addEventListener("touchmove", function( e ) {
+      var touchObj = e.changedTouches[0];
+      var traveled = parseInt(touchObj.clientX) - start;
+
+      // push all touchmove positions into the distance array
+      dist.push( traveled );
+
+      e.preventDefault();
+    });
+
+    cont.addEventListener("touchend", function(e) {
+      var touchObj = e.changedTouches[0];
+      //var  = parseInt( touchObj.clientX ) - start;
+      var lastItem = dist.length - 1;
+      var pos1 = dist[0];
+      var pos2 = dist[ lastItem ];
+
+      // if pos1 is less than position2 by less than -30
+      if ( pos1 - pos2 < -30 ) {
+        //console.log( pos1 - pos2 );
+        previousIndex( arr );
+      }
+      // if pos1 is less than pos2 by more than 30
+      else if ( pos1 - pos2 > 30 ) {
+        //console.log( pos1 - pos2 );
+        advanceIndex( arr );
+      }
+      else {
+        return;
+      }
+
+      dist = []; // reset distance array
+
+        e.preventDefault();
+    });
+  }
+
   // customize gallery characteristics
   function preferences( timing, easing, loop ) {
     if ( timing ) {
@@ -371,6 +421,7 @@ function Gallery() {
     paddleHandler( obj, arr ); // handle paddle navigation
     dotNav( arr ); // create dotnav
     dotNavEvent( arr ); // handle dotNavEvent
+    touchEvents( arr ); // handle touchEvents
   }
 
   return {
@@ -387,6 +438,7 @@ function Gallery() {
 var gallery = new Gallery();
 var slides = []; // slides array stores slide objects
 var el = document.getElementById("attach"); // set element declaration to with element to append gallery to
+
 // gallery.addSlide("slide 1", "imgsrc.jpg", slides); // invocation of a new slide
 gallery.addSlide("slide1", "img/img1.jpg", slides ); // addSlide along with slide name, image path, and project array
 gallery.addSlide("slide2", "img/img2.jpg", slides );
@@ -394,3 +446,4 @@ gallery.addSlide("slide3", "img/img3.jpg", slides );
 gallery.addSlide("slide4", "img/img4.jpg", slides );
 gallery.addSlide("slide5", "img/img5.jpg", slides );
 gallery.init( gallery, slides, el ); // initialize gallery
+gallery.preferences( 450, "easeInOut", true ); // set preferences
