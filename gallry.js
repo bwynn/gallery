@@ -274,6 +274,8 @@ function Gallery() {
         el[i].style.backgroundSize = "cover";
         el[i].style.backgroundRepeat = "no-repeat";
         el[i].style.backgroundPosition = "center";
+        el[i].style.height = "100%";
+        el[i].style.margin = "0";
       }
     }
     else {
