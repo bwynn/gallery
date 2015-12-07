@@ -181,7 +181,7 @@ function Gallery() {
   function createContainer( container, arr ) {
       // if slides are present
       if ( arr.length > 0 ) {
-          var gallery = String() +
+          var gallry = String() +
                "<div id='gallry'>" +
                  "<div id='slides'></div>" +
                  "<div class='paddle-nav'>" +
@@ -193,7 +193,7 @@ function Gallery() {
                  "</div>" +
                "</div>";
 
-          container.innerHTML = gallery;
+          container.innerHTML = gallry;
       }
       else {
           console.log( "Need to create more slide objects using addSlide() method." );

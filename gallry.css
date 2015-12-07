@@ -79,7 +79,8 @@ body {
       display: -webkit-flex;
       display: flex;
       -webkit-justify-content: center;
-      justify-content: center; }
+      justify-content: center;
+      padding: 0; }
       #gallry .dotnav ul li {
         display: inline-block;
         height: .75em;
