@@ -270,7 +270,7 @@ function Gallery() {
         }
 
         el[i].classList.add( arr[i].name, "slide" ); // cycle through array.name values to assign as class to element
-        el[i].style.background = "url('" + arr[i].src + "')"; // defining gallery slide image via arr.src prop
+        el[i].style.backgroundImage = "url('" + arr[i].src + "')"; // defining gallery slide image via arr.src prop
         el[i].style.backgroundSize = "cover";
         el[i].style.backgroundRepeat = "no-repeat";
         el[i].style.backgroundPosition = "center";
