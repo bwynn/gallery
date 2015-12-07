@@ -263,10 +263,10 @@ function Gallery() {
           Velocity( el[i], { left: "0%" }, { display: "block" }, { duration: prefs.timing, easing: prefs.easing });
         }
         else if ( i < currentSlide( arr ).index() ) {
-          Velocity( el[i], { left: "-100%" }, { display: "block" }, { duration: prefs.timing, easing: prefs.easing });
+          Velocity( el[i], { left: "-100%" }, { display: "none" }, { duration: prefs.timing, easing: prefs.easing });
         }
         else {
-          Velocity( el[i], { left: "100%" }, { display: "block" }, { duration: prefs.timing, easing: prefs.easing });
+          Velocity( el[i], { left: "100%" }, { display: "none" }, { duration: prefs.timing, easing: prefs.easing });
         }
 
         el[i].classList.add( arr[i].name, "slide" ); // cycle through array.name values to assign as class to element
