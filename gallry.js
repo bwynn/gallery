@@ -182,7 +182,7 @@ function Gallery() {
       // if slides are present
       if ( arr.length > 0 ) {
           var gallery = String() +
-               "<div id='slidify'>" +
+               "<div id='gallry'>" +
                  "<div id='slides'></div>" +
                  "<div class='paddle-nav'>" +
                    "<a href='#' class='left'><div class='paddle paddle-left'></div></a>" +
@@ -204,7 +204,7 @@ function Gallery() {
   // of array slide objects.
   function createSlides( arr, timing ) {
 
-    var gal = document.querySelector("#slidify #slides");
+    var gal = document.querySelector("#gallry #slides");
 
     // array has slides in it?
     if ( arr.length > 0 ) {
@@ -222,7 +222,7 @@ function Gallery() {
   }
 
   function dotNav( arr ) {
-    var getUl = document.querySelector("#slidify .dotnav > ul");
+    var getUl = document.querySelector("#gallry .dotnav > ul");
 
     if ( getUl ) {
       // create all dotnav elements by looping through the array
@@ -237,7 +237,7 @@ function Gallery() {
   }
 
   function dotNavSlides( arr ) {
-    var items = document.querySelectorAll("#slidify .dotnav li");
+    var items = document.querySelectorAll("#gallry .dotnav li");
     for (var i = 0; i < arr.length; i++) {
       if ( arr[i].active ) {
         items[i].classList.add("active");
@@ -251,7 +251,7 @@ function Gallery() {
   // this is a callback function to determine the slide index after a state change
   // has taken place to display the current slide
   function displaySlide( arr ) {
-    var el = document.querySelectorAll("#slidify #slides > figure");
+    var el = document.querySelectorAll("#gallry #slides > figure");
     // if elements created and variable successful
     if (el) {
       for ( var i = 0; i < arr.length; i++ ) {
@@ -352,7 +352,7 @@ function Gallery() {
   }
 
   function touchEvents( arr ) {
-    var cont = document.getElementById("slidify");
+    var cont = document.getElementById("gallry");
 
     var start = 0;
     var dist = [];
