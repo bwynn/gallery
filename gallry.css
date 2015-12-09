@@ -5,16 +5,16 @@ body {
   height: 600px;
   width: 100%; }
 
-#gallry {
+.gallry {
   height: 100%;
   width: 100%;
   margin: 0 auto;
   overflow: hidden;
   position: relative;
   z-index: 5; }
-  #gallry #slides {
+  .gallry .slides {
     height: 100%; }
-    #gallry #slides .slide {
+    .gallry .slides .slide {
       width: 100%;
       height: inherit;
       margin: 0;
@@ -22,7 +22,7 @@ body {
       top: 0;
       left: 100%;
       display: none; }
-  #gallry .paddle-nav {
+  .gallry .paddle-nav {
     position: absolute;
     z-index: 10;
     top: 40%;
@@ -30,21 +30,21 @@ body {
     width: 100%;
     display: -webkit-flex;
     display: flex; }
-    #gallry .paddle-nav a {
+    .gallry .paddle-nav a {
       display: block;
       height: 100%; }
-      #gallry .paddle-nav a.right {
+      .gallry .paddle-nav a.right {
         margin-left: auto; }
-      #gallry .paddle-nav a .paddle {
+      .gallry .paddle-nav a .paddle {
         height: 100%;
         width: 4em;
         margin: 0 1em;
         overflow: hidden;
         content: "";
         display: block; }
-        #gallry .paddle-nav a .paddle:hover::before {
+        .gallry .paddle-nav a .paddle:hover::before {
           border-color: #444; }
-        #gallry .paddle-nav a .paddle::before {
+        .gallry .paddle-nav a .paddle::before {
           border-style: solid;
           border-color: #fff;
           box-shadow: 1px 2px 10px #222;
@@ -60,31 +60,31 @@ body {
           top: .8em;
           -webkit-transition: 0.3s all ease-in-out;
           transition: 0.3s all ease-in-out; }
-        #gallry .paddle-nav a .paddle.paddle-right::before {
+        .gallry .paddle-nav a .paddle.paddle-right::before {
           float: right;
           right: 32px;
           transform: rotate(45deg); }
-        #gallry .paddle-nav a .paddle.paddle-left::before {
+        .gallry .paddle-nav a .paddle.paddle-left::before {
           transform: rotate(-135deg);
           left: 32px; }
         @media only screen and (max-width: 767px) {
-          #gallry .paddle-nav a .paddle {
+          .gallry .paddle-nav a .paddle {
             width: 3em; }
-            #gallry .paddle-nav a .paddle::before {
+            .gallry .paddle-nav a .paddle::before {
               height: 2em;
               width: 2em; } }
-  #gallry .dotnav {
+  .gallry .dotnav {
     position: absolute;
     width: 100%;
     bottom: 1em;
     z-index: 12; }
-    #gallry .dotnav ul {
+    .gallry .dotnav ul {
       display: -webkit-flex;
       display: flex;
       -webkit-justify-content: center;
       justify-content: center;
       padding: 0; }
-      #gallry .dotnav ul li {
+      .gallry .dotnav ul li {
         display: inline-block;
         height: .75em;
         width: .75em;
@@ -94,10 +94,10 @@ body {
         box-shadow: 1px 2px 10px #222;
         -webkit-transition: 0.3s all ease-in-out;
         transition: 0.3s all ease-in-out; }
-        #gallry .dotnav ul li:hover {
+        .gallry .dotnav ul li:hover {
           cursor: pointer;
           border: 2px solid #444; }
-        #gallry .dotnav ul li.active {
+        .gallry .dotnav ul li.active {
           border: 2px solid #444; }
 
 /*# sourceMappingURL=gallry.css.map */

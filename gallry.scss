@@ -11,14 +11,14 @@ body {
 }
 
 
-#gallry {
+.gallry {
   height: $hundo;
   width: $hundo;
   margin: 0 auto;
   overflow: hidden;
   position: relative;
   z-index: 5;
-  #slides {
+  .slides {
     height: $hundo;
     .slide {
       width: $hundo;
