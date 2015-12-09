@@ -194,6 +194,13 @@ function Gallery() {
                "</div>";
 
           container.innerHTML = gallry;
+
+          //if ( container.offsetWidth < 767 ) {
+            //var paddleNavs = document.getElementsByClassName("paddle"), ":before";
+
+            //paddleNavs.style.height = "2em";
+            //paddleNavs.style.width = "2em";
+          //}
       }
       else {
           console.log( "Need to create more slide objects using addSlide() method." );
@@ -344,14 +351,19 @@ function Gallery() {
 
           displaySlide( arr );
         });
+
+        navlink[i].addEventListener("touchstart", function(e) {
+          activeClassState(navlink, this, arr);
+          displaySlide(arr);
+        });
       }
-      }
+    }
     else {
       console.log("pass in the slide array");
     }
   }
 
-  function touchEvents( arr ) {
+  function swipeEvents( arr ) {
     var cont = document.getElementById("gallry");
 
     var start = 0;
@@ -423,7 +435,7 @@ function Gallery() {
     paddleHandler( obj, arr ); // handle paddle navigation
     dotNav( arr ); // create dotnav
     dotNavEvent( arr ); // handle dotNavEvent
-    touchEvents( arr ); // handle touchEvents
+    swipeEvents( arr ); // handle touchEvents
   }
 
   return {

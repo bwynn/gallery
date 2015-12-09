@@ -37,7 +37,7 @@ body {
     position: absolute;
     z-index: 10;
     top: 40%;
-    height: 15%;
+    height: 20%;
     width: $hundo;
     display: -webkit-flex;
     display: flex;
@@ -61,7 +61,8 @@ body {
         }
         &::before {
           border-style: solid;
-          border-color: #444;
+          border-color: #fff;
+          box-shadow: 1px 2px 10px #222;
           border-width: .25em .25em 0 0;
           content: "";
           display: inline-block;
@@ -89,6 +90,7 @@ body {
           }
         }
         @media only screen and (max-width: 767px) {
+          width: 3em;
           &::before {
             height: 2em;
             width: 2em;
@@ -121,10 +123,10 @@ body {
         transition: $transition;
         &:hover {
           cursor: pointer;
-          border: 2px solid #333;
+          border: 2px solid #444;
         }
         &.active {
-          border: 2px solid #333;
+          border: 2px solid #444;
         }
       }
     }
