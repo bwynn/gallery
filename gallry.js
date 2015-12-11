@@ -57,7 +57,7 @@ function Gallery() {
 
       arr.push( slide ); // push the slide object into the slides array
 
-      console.log(arr); // just to double check while in development
+      //console.log(arr); // just to double check while in development
     }
     else {
       console.log("Ensure parameters passed in are: string, string, array"); // go fish
@@ -76,7 +76,7 @@ function Gallery() {
       // return with the first slide as active
       arr[0].active = true; // sets the first gallery object with the active state
     }
-    console.log( arr ); // quick double check
+    //console.log( arr ); // quick double check
   }
 
   // curSlide takes the gallery array object as a parameter, which controls
@@ -114,7 +114,7 @@ function Gallery() {
 
       // assign new active state index
       arr[newIdx].active = true;
-      console.log(arr);
+      //console.log(arr);
 
       // if idx of arr == newIdx
       if ( currentSlide( arr ).index() == newIdx ) {
@@ -151,7 +151,7 @@ function Gallery() {
 
       // new index assigned
       arr[newIdx].active = true;
-      console.log(arr);
+      //console.log(arr);
 
       if ( currentSlide( arr ).index() == newIdx ) {
         displaySlide( arr );
@@ -194,13 +194,6 @@ function Gallery() {
                "</div>";
 
           container.innerHTML = gallry;
-
-          //if ( container.offsetWidth < 767 ) {
-            //var paddleNavs = document.getElementsByClassName("paddle"), ":before";
-
-            //paddleNavs.style.height = "2em";
-            //paddleNavs.style.width = "2em";
-          //}
       }
       else {
           console.log( "Need to create more slide objects using addSlide() method." );
@@ -209,9 +202,11 @@ function Gallery() {
 
   // this method invokes the generation of gallery slider, based on the presence
   // of array slide objects.
-  function createSlides( arr, timing ) {
+  function createSlides( arr, el ) {
 
-    var gal = document.querySelector(".gallry .slides");
+    var parent = el; // get attached node from init
+    var container = el.childNodes[0]; // get the first child container
+    var gal = container.childNodes[0]; // find the slides container
 
     // array has slides in it?
     if ( arr.length > 0 ) {
@@ -221,7 +216,7 @@ function Gallery() {
         // create new element
         gal.appendChild( fig );
       }
-      displaySlide( arr, timing );
+      displaySlide( arr );
     }
     else {
       console.log("createSlides function needs an array to be passed in as param");
@@ -431,7 +426,7 @@ function Gallery() {
   function init( obj, arr, el ) {
     defaultSlideState( arr ); // on init, this should be set as a promise, to execute asynchronously when a slide object is available
     createContainer( el, arr ); // create gallery container
-    createSlides( arr ); // create slides
+    createSlides( arr, el ); // create slides
     paddleHandler( obj, arr ); // handle paddle navigation
     dotNav( arr ); // create dotnav
     dotNavEvent( arr ); // handle dotNavEvent
