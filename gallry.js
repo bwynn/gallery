@@ -202,11 +202,9 @@ function Gallery() {
 
   // this method invokes the generation of gallery slider, based on the presence
   // of array slide objects.
-  function createSlides( arr, el ) {
+  function createSlides( arr, container ) {
 
-    var parent = el; // get attached node from init
-    var container = el.childNodes[0]; // get the first child container
-    var gal = container.childNodes[0]; // find the slides container
+    var gal = container.querySelector(".gallry > .slides");
 
     // array has slides in it?
     if ( arr.length > 0 ) {
@@ -223,9 +221,8 @@ function Gallery() {
     }
   }
 
-  function dotNav( arr ) {
-    var getUl = document.querySelector(".gallry .dotnav > ul");
-
+  function dotNav( arr, container ) {
+    var getUl = container.querySelector(".gallry .dotnav > ul");
     if ( getUl ) {
       // create all dotnav elements by looping through the array
       for ( var i = 0; i < arr.length; i++ ) {
@@ -234,7 +231,7 @@ function Gallery() {
 
         getUl.appendChild( li );
       }
-      dotNavSlides( arr );
+      dotNavSlides( arr, getUl );
     }
   }
 
@@ -300,9 +297,9 @@ function Gallery() {
     };
   }
 
-  function paddleHandler( obj, arr ) {
-    var rightBtn = document.querySelector(".paddle.paddle-right");
-    var leftBtn = document.querySelector(".paddle.paddle-left");
+  function paddleHandler( obj, arr, container ) {
+    var rightBtn = container.querySelector(".paddle.paddle-right");
+    var leftBtn = container.querySelector(".paddle.paddle-left");
 
     rightBtn.addEventListener("click", function(e) {
       slideEvent( obj ).next( arr );
@@ -332,11 +329,11 @@ function Gallery() {
       arr[ getIdx ].active = true;
     }
 
-    console.log(arr);
+    //console.log(arr);
   }
 
-  function dotNavEvent( arr ) {
-    var navlink = document.querySelectorAll(".dotnav ul li");
+  function dotNavEvent( arr, container ) {
+    var navlink = container.querySelectorAll(".dotnav ul li");
 
     if ( arr ) {
       for ( var i = 0; i < arr.length; i++ ) {
@@ -358,8 +355,8 @@ function Gallery() {
     }
   }
 
-  function swipeEvents( arr ) {
-    var cont = document.querySelector(".gallry");
+  function swipeEvents( arr, container ) {
+    var cont = container.querySelector(".gallry");
 
     var start = 0;
     var dist = [];
@@ -427,10 +424,10 @@ function Gallery() {
     defaultSlideState( arr ); // on init, this should be set as a promise, to execute asynchronously when a slide object is available
     createContainer( el, arr ); // create gallery container
     createSlides( arr, el ); // create slides
-    paddleHandler( obj, arr ); // handle paddle navigation
-    dotNav( arr ); // create dotnav
-    dotNavEvent( arr ); // handle dotNavEvent
-    swipeEvents( arr ); // handle touchEvents
+    paddleHandler( obj, arr, el ); // handle paddle navigation
+    dotNav( arr, el ); // create dotnav
+    dotNavEvent( arr, el ); // handle dotNavEvent
+    swipeEvents( arr, el ); // handle touchEvents
   }
 
   return {
