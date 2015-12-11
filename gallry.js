@@ -57,7 +57,6 @@ function Gallery() {
 
       arr.push( slide ); // push the slide object into the slides array
 
-      //console.log(arr); // just to double check while in development
     }
     else {
       console.log("Ensure parameters passed in are: string, string, array"); // go fish
@@ -76,10 +75,9 @@ function Gallery() {
       // return with the first slide as active
       arr[0].active = true; // sets the first gallery object with the active state
     }
-    //console.log( arr ); // quick double check
   }
 
-  // curSlide takes the gallery array object as a parameter, which controls
+  // currentSlide is a utility function that takes the gallery array object as a parameter, which controls
   // session states and changes
   function currentSlide( arr ) {
     var selected; // declare selected
@@ -103,7 +101,7 @@ function Gallery() {
   }
 
   // increment/advance to the next array object
-  function advanceIndex( arr ) {
+  function advanceIndex( arr, container ) {
     var getIndex = currentSlide( arr ).index(); // get current slides index
     var newIdx = getIndex += 1; // set new index
 
@@ -118,8 +116,8 @@ function Gallery() {
 
       // if idx of arr == newIdx
       if ( currentSlide( arr ).index() == newIdx ) {
-        displaySlide( arr );
-        dotNavSlides( arr );
+        displaySlide( arr, container );
+        dotNavSlides( arr, container );
       }
       else {
         console.log("conditional switcher inside advance index not working");
@@ -130,15 +128,15 @@ function Gallery() {
       currentSlide( arr ).selected.active = false;
       arr[0].active = true;
 
-      displaySlide( arr );
-      dotNavSlides( arr );
+      displaySlide( arr, el );
+      dotNavSlides( arr, el );
     }
     else {
       console.log("Last slide in the array");
     }
   }
 
-  function previousIndex( arr ) {
+  function previousIndex( arr, container ) {
     var getIndex = currentSlide( arr ).index();
 
     // if the current index is set to 1 or, select previous slide
@@ -154,8 +152,8 @@ function Gallery() {
       //console.log(arr);
 
       if ( currentSlide( arr ).index() == newIdx ) {
-        displaySlide( arr );
-        dotNavSlides( arr );
+        displaySlide( arr, container );
+        dotNavSlides( arr, container );
       }
       else {
         console.log("something went wrong with the previous index conditional");
@@ -170,8 +168,8 @@ function Gallery() {
       // set new index value
       arr[curIdx].active = true;
 
-      displaySlide( arr ); // invoke
-      dotNavSlides( arr ); // invoke
+      displaySlide( arr, el ); // invoke
+      dotNavSlides( arr, el ); // invoke
     }
     else {
       return console.log("At the first slide, can't go back any further.");
@@ -214,7 +212,7 @@ function Gallery() {
         // create new element
         gal.appendChild( fig );
       }
-      displaySlide( arr );
+      displaySlide( arr, container );
     }
     else {
       console.log("createSlides function needs an array to be passed in as param");
@@ -235,8 +233,8 @@ function Gallery() {
     }
   }
 
-  function dotNavSlides( arr ) {
-    var items = document.querySelectorAll(".gallry .dotnav li");
+  function dotNavSlides( arr, container ) {
+    var items = container.querySelectorAll(".gallry .dotnav li");
     for (var i = 0; i < arr.length; i++) {
       if ( arr[i].active ) {
         items[i].classList.add("active");
@@ -249,8 +247,10 @@ function Gallery() {
 
   // this is a callback function to determine the slide index after a state change
   // has taken place to display the current slide
-  function displaySlide( arr ) {
-    var el = document.querySelectorAll(".gallry .slides > figure");
+  function displaySlide( arr, container ) {
+    //console.log(container);
+    var el = container.querySelectorAll(".gallry .slides > figure");
+
     // if elements created and variable successful
     if (el) {
       for ( var i = 0; i < arr.length; i++ ) {
@@ -283,12 +283,12 @@ function Gallery() {
   }
 
   function slideEvent( obj ) {
-    function next( arr ) {
-      obj.advanceIndex.call(this, arr);
+    function next( arr, container ) {
+      advanceIndex( arr, container );
     }
 
-    function prev( arr ) {
-      obj.previousIndex.call(this, arr);
+    function prev( arr, container ) {
+      previousIndex( arr, container );
     }
 
     return {
@@ -302,11 +302,15 @@ function Gallery() {
     var leftBtn = container.querySelector(".paddle.paddle-left");
 
     rightBtn.addEventListener("click", function(e) {
-      slideEvent( obj ).next( arr );
+      e.preventDefault();
+
+      slideEvent( obj ).next( arr, container );
     }, false );
 
     leftBtn.addEventListener("click", function(e) {
-      slideEvent( obj ).prev( arr );
+      e.preventDefault();
+
+      slideEvent( obj ).prev( arr, container );
     }, false );
   }
 
@@ -341,12 +345,12 @@ function Gallery() {
 
           activeClassState( navlink, this, arr ); // callback function
 
-          displaySlide( arr );
+          displaySlide( arr, container );
         });
 
         navlink[i].addEventListener("touchstart", function(e) {
           activeClassState(navlink, this, arr);
-          displaySlide(arr);
+          displaySlide(arr, container);
         });
       }
     }
@@ -388,12 +392,12 @@ function Gallery() {
       // if pos1 is less than position2 by less than -30
       if ( pos1 - pos2 < -30 ) {
         //console.log( pos1 - pos2 );
-        previousIndex( arr );
+        previousIndex( arr, container );
       }
       // if pos1 is less than pos2 by more than 30
       else if ( pos1 - pos2 > 30 ) {
         //console.log( pos1 - pos2 );
-        advanceIndex( arr );
+        advanceIndex( arr, container );
       }
       else {
         return;
@@ -435,7 +439,15 @@ function Gallery() {
     addSlide: addSlide, // return addSlide method
     advanceIndex: advanceIndex, // advanceIndex
     previousIndex: previousIndex, // previousIndex
-    init: init // initialize gallery - takes new Gallery object, array and element to attach arguments.
+    init: init, // initialize gallery - takes new Gallery object, array and element to attach arguments.
+    defaultSlideState: defaultSlideState, // on init, this should be set as a promise, to execute asynchronously when a slide object is available
+    createContainer: createContainer, // create gallery container
+    createSlides: createSlides, // create slides
+    paddleHandler: paddleHandler, // handle paddle navigation
+    dotNav: dotNav, // create dotnav
+    dotNavEvent: dotNavEvent, // handle dotNavEvent
+    swipeEvents: swipeEvents, // handle touchEvents
+    currentSlide: currentSlide,
   };
 }
 
