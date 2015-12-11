@@ -128,8 +128,8 @@ function Gallery() {
       currentSlide( arr ).selected.active = false;
       arr[0].active = true;
 
-      displaySlide( arr, el );
-      dotNavSlides( arr, el );
+      displaySlide( arr, container );
+      dotNavSlides( arr, container );
     }
     else {
       console.log("Last slide in the array");
@@ -168,8 +168,8 @@ function Gallery() {
       // set new index value
       arr[curIdx].active = true;
 
-      displaySlide( arr, el ); // invoke
-      dotNavSlides( arr, el ); // invoke
+      displaySlide( arr, container ); // invoke
+      dotNavSlides( arr, container ); // invoke
     }
     else {
       return console.log("At the first slide, can't go back any further.");
@@ -376,10 +376,10 @@ function Gallery() {
       var touchObj = e.changedTouches[0];
       var traveled = parseInt(touchObj.clientX) - start;
 
+      e.preventDefault();
+      
       // push all touchmove positions into the distance array
       dist.push( traveled );
-
-      e.preventDefault();
     });
 
     cont.addEventListener("touchend", function(e) {
@@ -388,6 +388,8 @@ function Gallery() {
       var lastItem = dist.length - 1;
       var pos1 = dist[0];
       var pos2 = dist[ lastItem ];
+
+      e.preventDefault();
 
       // if pos1 is less than position2 by less than -30
       if ( pos1 - pos2 < -30 ) {
@@ -404,8 +406,6 @@ function Gallery() {
       }
 
       dist = []; // reset distance array
-
-        e.preventDefault();
     });
   }
 
