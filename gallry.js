@@ -1,35 +1,3 @@
-// Components:
-//  - Slide object
-//    - name
-//    - src
-//    - active state change req'd
-
-//  - Gallery object
-//    - add slide object
-//    - default state
-//    - current slide
-//      - slide object
-//      - slide index
-//    - advance index
-//    - decrement index
-
-//  - DOM Generation
-//    - Append structure to target container
-//      - instantiate new Gallery object
-//      - add slides elements to gallery
-//      - add class values to slides
-//    - Add paddle navigation to gallery
-//    - Add dotnav list items to gallery
-//      - set default states through class assignments in elements
-
-//  - Events
-//    - paddle navigation
-//       - bind advance and previous state change
-//    - dot navigation
-//       - bind the active state to a selected element
-//    - touch navigation
-//       - advance/previous state changes
-
 function Slide() {
   this.active = false; // default state - false, this property will act as the
   // state switcher for the current gallery slide in the gallery.
@@ -42,8 +10,11 @@ function Gallery() {
   var prefs = {
     timing: 300,
     easing: "ease",
-    loop: false
+    loop: false,
   };
+
+  // a local array to help define some of the background properties for customization
+  var slideObjs = [];
 
   function addSlide( name, path, arr ) {
     // check parameters passed in are - string, string, array object
@@ -56,11 +27,11 @@ function Gallery() {
       slide.src = path; // get url path as a string
 
       arr.push( slide ); // push the slide object into the slides array
-
     }
     else {
       console.log("Ensure parameters passed in are: string, string, array"); // go fish
     }
+    return slideObjs.push(slide);
   }
 
   // implemented as Gallery.defaultState.call(this, arr);
@@ -268,17 +239,35 @@ function Gallery() {
           Velocity( el[i], { left: "100%" }, { display: "none" }, { duration: prefs.timing, easing: prefs.easing });
         }
 
+        if (slideObjs[i].position !== undefined) {
+          el[i].style.backgroundSize = slideObjs[i].size;
+          el[i].style.backgroundPosition = slideObjs[i].backgroundPosition;
+        }
+        else {
+          el[i].style.backgroundSize = "cover";
+          el[i].style.backgroundPosition = "center";
+        }
+
         el[i].classList.add( arr[i].name, "slide" ); // cycle through array.name values to assign as class to element
-        //el[i].style.backgroundImage = "url(" + arr[i].src + ")"; // defining gallery slide image via arr.src prop
-        //el[i].style.backgroundSize = "cover";
-        //el[i].style.backgroundRepeat = "no-repeat";
-        //el[i].style.backgroundPosition = "center";
+        el[i].style.backgroundImage = "url(" + arr[i].src + ")"; // defining gallery slide image via arr.src prop
+        el[i].style.backgroundRepeat = "no-repeat";
         el[i].style.height = "100%";
         el[i].style.margin = "0";
       }
     }
     else {
       console.log("Check el element is assigned to correct querySelectorAll value.");
+    }
+  }
+
+  // backgroundCtrl method sets string values to be placed into the displaySlide
+  // method when displaying gallery content. The conditional placed there will
+  // set the correct background position and size properties for each of the
+  // slides
+  function backgroundCtrl( index, size, position ) {
+    if (index === Number && size === "string" && position === "string") {
+      slideObjs[index].size = size;
+      slideObjs[index].position = position;
     }
   }
 
@@ -332,8 +321,6 @@ function Gallery() {
 
       arr[ getIdx ].active = true;
     }
-
-    //console.log(arr);
   }
 
   function dotNavEvent( arr, container ) {
@@ -342,9 +329,7 @@ function Gallery() {
     if ( arr ) {
       for ( var i = 0; i < arr.length; i++ ) {
         navlink[i].addEventListener("click", function( e ) {
-
           activeClassState( navlink, this, arr ); // callback function
-
           displaySlide( arr, container );
         });
 
@@ -447,21 +432,8 @@ function Gallery() {
     dotNav: dotNav, // create dotnav
     dotNavEvent: dotNavEvent, // handle dotNavEvent
     swipeEvents: swipeEvents, // handle touchEvents
-    currentSlide: currentSlide,
+    currentSlide: currentSlide, // get currentSlide utility
+    backgroundCtrl: backgroundCtrl,
+    slideObjs: slideObjs,
   };
 }
-
-// SAMPLE SESSION FOR DEVELOPMENT PURPOSES
-// create new gallery object
-var gallery = new Gallery();
-var slides = []; // slides array stores slide objects
-var el = document.getElementById("attach"); // set element declaration to with element to append gallery to
-
-// gallery.addSlide("slide 1", "imgsrc.jpg", slides); // invocation of a new slide
-gallery.addSlide("slide1", "img/img1.jpg", slides ); // addSlide along with slide name, image path, and project array
-gallery.addSlide("slide2", "img/img2.jpg", slides );
-gallery.addSlide("slide3", "img/img3.jpg", slides );
-gallery.addSlide("slide4", "img/img4.jpg", slides );
-gallery.addSlide("slide5", "img/img5.jpg", slides );
-gallery.init( gallery, slides, el ); // initialize gallery
-gallery.preferences( 450, "easeInOut", true ); // set preferences
