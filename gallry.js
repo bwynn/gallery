@@ -11,6 +11,7 @@ function Gallery() {
     timing: 300,
     easing: "ease",
     loop: false,
+    retina: false,
   };
 
   // a local array to help define some of the background properties for customization
@@ -248,8 +249,20 @@ function Gallery() {
           el[i].style.backgroundPosition = "center";
         }
 
+        if (prefs.retina) {
+          // do some device sniffing to determine if the screen is retina display or not
+          if (window.devicePixelRatio > 1.5) {
+            var str = arr[i].src;
+            var first = str.slice(0, str.length - 4); // get first part of string
+            var last = str.slice(str.length - 4, str.length); // get .jpg, .png, .svg, .gif files --- must be 4 character file extension
+            el[i].style.backgroundImage = "url(" + first + "_2x" + last + ")"; // defining gallery slide image via arr.src prop
+          }
+        }
+        else {
+          el[i].style.backgroundImage = "url(" + arr[i].src + ")"; // defining gallery slide image via arr.src prop
+        }
+
         el[i].classList.add( arr[i].name, "slide" ); // cycle through array.name values to assign as class to element
-        el[i].style.backgroundImage = "url(" + arr[i].src + ")"; // defining gallery slide image via arr.src prop
         el[i].style.backgroundRepeat = "no-repeat";
         el[i].style.height = "100%";
         el[i].style.margin = "0";
@@ -395,7 +408,7 @@ function Gallery() {
   }
 
   // customize gallery characteristics
-  function preferences( timing, easing, loop ) {
+  function preferences( timing, easing, loop, retina ) {
     if ( timing ) {
       prefs.timing = timing;
     }
@@ -407,6 +420,11 @@ function Gallery() {
     if ( loop && typeof loop === "boolean" ) {
       prefs.loop = loop;
     }
+
+    if (retina) {
+      prefs.retina = retina;
+    }
+    console.log(prefs);
   }
 
   function init( obj, arr, el ) {
