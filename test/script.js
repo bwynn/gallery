@@ -1,7 +1,8 @@
 //(function() {
   // SAMPLE SESSION FOR DEVELOPMENT PURPOSES
   // create new gallery object
-  var gallery = new Gallery();
+  var getGallery = gallry.gallery();
+  var gallery = getGallery;
   var slides = []; // slides array stores slide objects
   var el = document.getElementById("attach"); // set element declaration to with element to append gallery to
 

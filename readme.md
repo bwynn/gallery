@@ -11,10 +11,11 @@ Creating a new gallery is quick and easy to do. Gallry.js relies on one other ja
 <script src="gallry.js></script>
 <script src="your_script.js></script>
 ```
-Within your script, create a new instance of the Gallery object.
+Create a new instance of the gallery within your current scope.
 
 ```
-var gallry = new Gallery();
+var getGallery = gallry.gallery(); // instantiate a new gallery
+var gallry = getGallery;
 ```
 Create a gallery array variable to add your slides to. You can name it whatever you like, but this array stores the slide objects created using the addSlide method.
 ```
@@ -48,6 +49,3 @@ In your html document, reference the gallry.css file before your main css file.
 <link rel="stylesheet" href="css/gallry.css"/>
 <link rel="stylesheet" href="css/style.css"/>
 ```
-
-## Considerations
-You may be asking, "Will gallry.js work with jQuery?" While you can add this script into a page using jQuery, this library needs declarations to instantiate written in vanilla javascript.
