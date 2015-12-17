@@ -29,11 +29,12 @@ var gallry = (function() {
         slide.src = path; // get url path as a string
 
         arr.push( slide ); // push the slide object into the slides array
+
+       	return slideObjs.push(slide);
       }
       else {
         console.log("Ensure parameters passed in are: string, string, array"); // go fish
       }
-      return slideObjs.push(slide);
     }
 
     // implemented as Gallery.defaultState.call(this, arr);
@@ -460,5 +461,5 @@ var gallry = (function() {
   return {
     slide: Slide,
     gallery: Gallery,
-  }
+  };
 }());
