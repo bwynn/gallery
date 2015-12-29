@@ -15,9 +15,6 @@ var gallry = (function() {
       retina: false,
     };
 
-    // a local array to help define some of the background properties for customization
-    var slideObjs = [];
-
     function addSlide( name, path, arr ) {
       // check parameters passed in are - string, string, array object
       if ( typeof name == "string" && typeof path == "string" && Array.isArray( arr )) {
@@ -29,8 +26,6 @@ var gallry = (function() {
         slide.src = path; // get url path as a string
 
         arr.push( slide ); // push the slide object into the slides array
-
-       	return slideObjs.push(slide);
       }
       else {
         console.log("Ensure parameters passed in are: string, string, array"); // go fish
@@ -242,9 +237,9 @@ var gallry = (function() {
             Velocity( el[i], { left: "100%" }, { display: "none" }, { duration: prefs.timing, easing: prefs.easing });
           }
 
-          if (slideObjs[i].position !== undefined) {
-            el[i].style.backgroundSize = slideObjs[i].size;
-            el[i].style.backgroundPosition = slideObjs[i].backgroundPosition;
+          if (arr[i].backgroundPosition !== undefined) {
+            el[i].style.backgroundSize = arr[i].size;
+            el[i].style.backgroundPosition = arr[i].backgroundPosition;
           }
           else {
             el[i].style.backgroundSize = "cover";
@@ -279,10 +274,17 @@ var gallry = (function() {
     // method when displaying gallery content. The conditional placed there will
     // set the correct background position and size properties for each of the
     // slides
-    function backgroundCtrl( index, size, position ) {
-      if (index === Number && size === "string" && position === "string") {
-        slideObjs[index].size = size;
-        slideObjs[index].position = position;
+    function backgroundCtrl( arr, idx, size, position ) {
+      if (typeof idx === "number" && typeof size === "string" && typeof position === "string") {
+        arr[idx].size = size;
+        arr[idx].backgroundPosition = position;
+      }
+      else {
+        console.log(idx);
+        console.log(size);
+        console.log(position);
+        console.log(arr);
+        console.log("There was an issue");
       }
     }
 
@@ -454,7 +456,6 @@ var gallry = (function() {
       swipeEvents: swipeEvents, // handle touchEvents
       currentSlide: currentSlide, // get currentSlide utility
       backgroundCtrl: backgroundCtrl,
-      slideObjs: slideObjs,
     };
   }
 
