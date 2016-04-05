@@ -19,15 +19,14 @@
     position: absolute;
     z-index: 10;
     top: 40%;
-    height: 15%;
-    min-height: 5em;
+    height: 5.7em;
     width: 100%;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex; }
     .gallry .paddle-nav a {
       display: block;
-      height: 100%;
+      height: 5.7em;
       background-color: #fff;
       opacity: 0.5;
       border-radius: 0 5px 5px 0;
@@ -40,7 +39,7 @@
         margin-left: auto;
         border-radius: 5px 0 0 5px; }
       .gallry .paddle-nav a .paddle {
-        height: 100%;
+        height: 5.7em;
         width: 4em;
         margin: 0 1em;
         overflow: hidden;
