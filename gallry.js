@@ -246,6 +246,8 @@ var gallry = (function() {
             el[i].style.backgroundPosition = "center";
           }
 
+          // this conditional currently requires 2x assets to be available. If no 2x assets are available,
+          // no fallback images are provided.
           if (prefs.retina) {
             // do some device sniffing to determine if the screen is retina display or not
             if (window.devicePixelRatio > 1.5) {
@@ -254,7 +256,12 @@ var gallry = (function() {
               var last = str.slice(str.length - 4, str.length); // get .jpg, .png, .svg, .gif files --- must be 4 character file extension
               el[i].style.backgroundImage = "url(" + first + "_2x" + last + ")"; // defining gallery slide image via arr.src prop
             }
+            else {
+              // if the device pixel ratio doesnt match up, use the 1x asset
+              el[i].style.backgroundImage = "url(" + arr[i].src + ")"; // defining gallery slide image via arr.src prop
+            }
           }
+          // if prefs.retina is false, use the 1x image asset. 
           else {
             el[i].style.backgroundImage = "url(" + arr[i].src + ")"; // defining gallery slide image via arr.src prop
           }
