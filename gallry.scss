@@ -1,5 +1,49 @@
 $hundo: 100%;
 $transition: .3s all ease-in-out;
+$yellow: #F2F64D;
+$inline: inline-block;
+$tablet: 767px;
+$phones: 480px;
+$em: 1em;
+$dark: #333;
+$light: #fff;
+
+// flex layouts
+@mixin flex {
+  display: -webkit-flex;
+  display: flex;
+}
+
+// to be used in conjunction with the @mixin flex declared above
+@mixin justify-center {
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+// consistent transitions
+@mixin transition {
+  -webkit-transition: $transition;
+  transition: $transition;
+}
+
+// takes a $color argument, creates a consistent box-shadow profile
+@mixin box-shadows($sizing, $spread, $color) {
+  box-shadow: $sizing $sizing $spread $spread $color;
+}
+
+// medium viewports
+@mixin medium {
+  @media (max-width: #{$tablet}) {
+    @content;
+  }
+}
+
+// small viewports
+@mixin small {
+  @media (max-width: #{$phones}) {
+    @content;
+  }
+}
 
 .gallry {
   height: $hundo;
@@ -18,105 +62,116 @@ $transition: .3s all ease-in-out;
       top: 0;
       left: 100%;
       display: none;
-      &.active {
-        //left: 0;
-      }
     }
   }
   .paddle-nav {
     position: absolute;
     z-index: 10;
     top: 40%;
-    height: 20%;
-    min-height: 6em;
+    height: 15%;
+    min-height: $em * 5;
     width: $hundo;
-    display: -webkit-flex;
-    display: flex;
+    @include flex;
     a {
       display: block;
       height: $hundo;
+      background-color: $light;
+      opacity: 0.5;
+      border-radius: 0 5px 5px 0;
+      @include transition;
+      &:hover {
+        @include box-shadows(1px, 3px, $dark);
+        opacity: 0.6;
+      }
       &.right {
         margin-left: auto;
+        border-radius: 5px 0 0 5px;
       }
       .paddle {
         height: $hundo;
-        width: 4em;
-        margin: 0 1em;
+        width: $em * 4;
+        margin: 0 $em;
         overflow: hidden;
         content: "";
         display: block;
         &:hover {
           &::before {
-            border-color: #444;
+            border-color: $dark;
           }
         }
         &::before {
           border-style: solid;
-          border-color: #fff;
-          box-shadow: 1px 2px 3px #222;
-          border-width: .25em .25em 0 0;
+          border-color: $dark;
+          border-width: $em/4 $em/4 0 0;
           content: "";
-          display: inline-block;
-          height: 4em;
+          display: $inline;
+          height: $em * 3.5;
           box-sizing: border-box;
           position: relative;
           transform: rotate(-45deg);
-          width: 4em;
+          width: $em * 4;
           vertical-align: top;
-          top: .8em;
-          -webkit-transition: $transition;
-          transition: $transition;
+          top: $em * 1.2;
+          @include transition;
         }
         &.paddle-right {
           &::before {
             float: right;
-            right: 32px;
+            right: 34px;
             transform: rotate(45deg);
+            top: $em * .95;
           }
         }
         &.paddle-left {
           &::before {
             transform: rotate(-135deg);
-            left: 32px;
+            left: 34px;
+            @include medium {
+              top: $em;
+            }
           }
         }
-        @media only screen and (max-width: 767px) {
-          width: 3em;
+        @include medium {
+          width: $em * 3;
           &::before {
-            height: 2em;
-            width: 2em;
+            height: $em * 2;
+            width: $em * 2;
           }
         }
       }
     }
+    @include medium {
+      min-height: $em * 3;
+      height: 10%;
+    }
+    @include small {
+      display: none;
+    }
   }
   .dotnav {
     position: absolute;
-    width: 100%;
-    bottom: 1em;
+    width: $hundo;
+    bottom: $em;
     z-index: 12;
     ul {
-      display: -webkit-flex;
-      display: flex;
-      -webkit-justify-content: center;
-      justify-content: center;
+      @include flex;
+      @include justify-center;
       padding: 0;
       li {
-        display: inline-block;
-        height: .75em;
-        width: .75em;
+        display: $inline;
+        height: $em * .75;
+        width: $em * .75;
         margin: 0 10px;
-        border: 2px solid white;
-        border-radius: 50%;
-        box-shadow: 1px 2px 3px #222;
-        -webkit-transition: $transition;
-        transition: $transition;
+        border: 2px solid $light;
+        border-radius: $hundo / 2;
+        @include box-shadows(1px, 1px, $dark);
+        @include transition;
         &:hover {
           cursor: pointer;
-          border: 2px solid #444;
+          border: 2px solid $yellow;
         }
         &.active {
-          border: 2px solid #444;
+          border: 2px solid $yellow;
         }
       }
     }
