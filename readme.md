@@ -2,6 +2,15 @@
 ## Overview
 Gallry.js is a javascript api that generates a responsive image gallery slider with minimal amounts of code needed to implement. Gallry.js also has customizable timing, easing, looping and retina settings. It is fully responsive, with size properties declared by the container element it is appended to. Gallry.js is touch enabled and developed with mobile and touch devices in mind. Adding this script to your project will allow for fully responsive galleries in mobile and desktop settings.
 
+## Installation
+Gallry.js is available via GitHub, and is set best installed into a project using Bower. For more information on bower, visit http://bower.io.
+
+Add gallry to your bower.json dependencies, or from the command line, type:
+
+```
+bower install gallry
+```
+
 ## Implementation
 
 ### Javascript
