@@ -61,7 +61,7 @@ The easing argument accepts a string value. This should match style easing decla
 
 The loop argument declares the ability to loop to the first slide from the last slide and vice versa. It takes a boolean value - true will allow looping, false will disable this feature.
 
-The retina argument when enabled, takes the image source string and slices it and adds an underscored 2x to the string. This will require 2x images to be available, and as such, the file name needs to match the format. There is no fallback for the retina feature, so if you declare this argument "true", and no 2x assets are available or are not using the correct file format "image_2x.jpg", for example, the gallery will display blank, and no error is thrown. Default value is set to false. If you leave this argument value as false, the 1x assets will work on both retina and non-retina viewports.
+The retina argument takes a boolean value. When true, this argument takes the image source string, slices it and adds an underscored 2x to the string. This will require 2x images to be available, and as such, the file name needs to match the format. There is no fallback for the retina feature, so if you declare this argument "true", and no 2x assets are available or are not using the correct file format "image_2x.jpg", for example, the gallery will appear empty, and no error is thrown. Default value is set to false. If you leave this argument value as false, the 1x assets will work on both retina and non-retina viewports.
 
 Default values for these arguments listed in example below:
 ```
@@ -74,4 +74,39 @@ The backgroundCtrl method takes 4 arguments, and gives you fine grained control 
 The background-position argument takes a string value that matches the background-position values in css, it can take a one word string eg."top", or could take multiple values within one string eg."bottom right".
 ```
 gallery.backgroundCtrl(slides, 0, "contain", "top right");
+```
+
+## Sample Gallery Implementation
+
+### javascript
+```
+var gallery = gallry.gallery(); // instantiate gallery
+var slides = []; // create an empty array to house slides
+var target = document.getElementById('bike-gallery'); // target container
+
+// add slides
+gallery.addSlide('bronson', 'path/to/images/sc_bronson.jpg', slides);
+gallery.addSlide('enduro', 'path/to/images/spe_enduro.jpg', slides);
+gallery.addSlide('patrol', 'path/to/images/tran_patrol.jpg', slides);
+gallery.addSlide('insurgent', 'path/to/images/evil_insurgent.jpg', slides);
+gallery.addSlide('mojo-hd', 'path/to/images/ibis_mojo_hd.jpg', slides);
+
+// modify background image properties (optional)
+gallery.backgroundCtrl(slides, 1, "cover", "center");
+gallery.backgroundCtrl(slides, 3, "contain", "bottom left");
+
+// set gallry preferences (optional)
+gallery.preferences(500, "easeInOut", false, true);
+
+// initialize the gallery
+gallery.init(gallery, slides, target);
+```
+
+### css
+```
+/* declare height and width properties for target element */
+#bike-gallery {
+  width: 100%;
+  height: 50vh;
+}
 ```
