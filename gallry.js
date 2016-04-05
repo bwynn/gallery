@@ -254,9 +254,9 @@ var gallry = (function() {
               var last = str.slice(str.length - 4, str.length); // get .jpg, .png, .svg, .gif files --- must be 4 character file extension
               el[i].style.backgroundImage = "url(" + first + "_2x" + last + ")"; // defining gallery slide image via arr.src prop
             }
-            else {
-              el[i].style.backgroundImage = "url(" + arr[i].src + ")"; // defining gallery slide image via arr.src prop
-            }
+          }
+          else {
+            el[i].style.backgroundImage = "url(" + arr[i].src + ")"; // defining gallery slide image via arr.src prop
           }
 
           el[i].classList.add( arr[i].name, "slide" ); // cycle through array.name values to assign as class to element
