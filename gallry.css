@@ -23,6 +23,7 @@
     min-height: 5em;
     width: 100%;
     display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex; }
     .gallry .paddle-nav a {
       display: block;
@@ -93,6 +94,7 @@
     z-index: 12; }
     .gallry .dotnav ul {
       display: -webkit-flex;
+      display: -ms-flexbox;
       display: flex;
       -webkit-justify-content: center;
       justify-content: center;
