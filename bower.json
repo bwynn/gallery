@@ -1,0 +1,31 @@
+{
+  "name": "gallry",
+  "homepage": "https://github.com/bwynn/gallery",
+  "authors": [
+    "Brian Wynn"
+  ],
+  "description": "A vanilla javascript image gallery library. Supports customization, retina images, css controlled background-image positioning, auto rotate and custom navigation.",
+  "main": "gallry.js",
+  "moduleType": [],
+  "keywords": [
+    "gallery",
+    "gallry",
+    "image-slider",
+    "image-gallery",
+    "javascript",
+    "js",
+    "vanilla",
+    "velocity"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "velocity": "latest"
+  }
+}
