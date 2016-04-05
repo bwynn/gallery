@@ -1,9 +1,9 @@
 # gallry.js
 ## Overview
-Gallry.js is a light weight javascript library that generates a responsive image gallery slider that's easy to get set up and running quickly. Gallry.js has customizable timing, easing, looping, retina settings, and individual slide positioning controls. It is fully responsive, with size properties declared by the container element it is appended to. Gallry.js is touch enabled and developed with mobile and touch devices in mind. Adding this script to your project will allow for fully responsive galleries in mobile and desktop settings.
+gallry.js is a light weight javascript library that generates a responsive image gallery slider that's easy to get set up and running quickly. gallry.js has customizable timing, easing, looping, retina settings, and individual slide positioning controls. It is fully responsive, with size properties declared by the container element it is appended to. gallry.js is touch enabled and developed with mobile and touch devices in mind. Adding this script to your project will allow for fully responsive galleries in mobile and desktop settings.
 
 ## Installation
-The easiest installation for gallry.js is using Bower. For more information on bower, visit http://bower.io. You can also simply clone this repository into your project files. The files from this library required for gallry.js to work properly are the gallry.css and gallry.js files, along with Julian Shapiro's Velocity js animation library.
+The easiest installation for gallry.js is using Bower. For more information on Bower, visit http://bower.io. You can also simply clone this repository into your project files. The files from this library required for gallry.js to work properly are the gallry.css and gallry.js files, along with Julian Shapiro's Velocity js animation library.
 
 Add gallry to your bower.json dependencies, or from the command line, type:
 
@@ -12,7 +12,7 @@ bower install gallry
 ```
 
 ## Getting Started
-Creating a new gallery is quick and easy to do. Gallry.js relies on one other javascript library, Velocity.js, https://github.com/julianshapiro/velocity authored by Julian Shapiro, to handle gallery animations. Your html file should reference the velocity.js script followed by gallry.js and then your script file.
+Creating a new gallery is quick and easy to do. gallry.js relies on one other javascript library, Velocity.js, https://github.com/julianshapiro/velocity authored by Julian Shapiro, to handle gallery animations. Your html file should reference the velocity.js script followed by gallry.js and then your script file.
 ```
 <script src="bower_components/velocity/velocity.js"></script>
 <script src="bower_components/gallry/gallry.js></script>
