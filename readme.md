@@ -21,8 +21,7 @@ Creating a new gallery is quick and easy to do. Gallry.js relies on one other ja
 Create a new instance of the gallery within your current scope.
 
 ```
-var getGallery = gallry.gallery(); // instantiate a new gallery
-var gallry = getGallery;
+var gallery = gallry.gallery(); // instantiate a new gallery
 ```
 Create a gallery array variable to add your slides to. You can name it whatever you like, but this array stores the slide objects created using the addSlide method.
 ```
@@ -40,11 +39,11 @@ gallry.addSlide("homer", "img/homer.jpg", slides);
 ### init(object, array, element)
 After you have added all of your desired slides, you are ready to initialize the gallery. The variables declared earlier will allow us to create the gallery. Using the variables declared above, an example instantiation looks like:
 ```
-gallry.init(gallry, slides, el);
+gallry.init(gallery, slides, el);
 ```
 
 ### Get the gallry.css file
-In your html document, reference the gallry.css file before your main css file. To see your images, you need to define the size and width of your containing element, and then you are set to go! For proper implementation, the containing element to be targeted should be identified via it's ID attribute.
+In your html document, reference the gallry.css file before your main css file. To see your images, you need to define the height and width of your containing element, and then you are set to go! For proper implementation, the containing element to be targeted should be identified via it's ID attribute.
 
 ```
 <link rel="stylesheet" href="bower_components/gallry/css/gallry.css"/>
@@ -66,10 +65,13 @@ The retina argument when enabled, takes the image source string and slices it an
 
 Default values for these arguments listed in example below:
 ```
-gallry.preferences(300, "ease", false, false);
+gallery.preferences(300, "ease", false, false);
 ```
 
 ### backgroundCtrl(array, index, background-size, background-position)
 The backgroundCtrl method takes 4 arguments, and gives you fine grained control of how your images are displayed, similar to how you would control them via css. The first argument is the slides array that you have defined for your gallery. The second argument will be your zero-based index for the slide you would like to modify. The background-size argument takes a string value matching background-size values for css styles.
 
 The background-position argument takes a string value that matches the background-position values in css, it can take a one word string eg."top", or could take multiple values within one string eg."bottom right".
+```
+gallery.backgroundCtrl(slides, 0, "contain", "top right");
+```
