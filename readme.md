@@ -11,13 +11,11 @@ Add gallry to your bower.json dependencies, or from the command line, type:
 bower install gallry
 ```
 
-## Implementation
-
-### Javascript
+## Getting Started
 Creating a new gallery is quick and easy to do. Gallry.js relies on one other javascript library, Velocity.js, authored by Julian Shapiro, to handle gallery animations. Your html file should reference the velocity.js script followed by gallry.js and then your script file.
 ```
-<script src="velocity.js"></script>
-<script src="gallry.js></script>
+<script src="bower_components/velocity/velocity.js"></script>
+<script src="bower_components/gallry/gallry.js></script>
 <script src="your_script.js></script>
 ```
 Create a new instance of the gallery within your current scope.
@@ -44,6 +42,9 @@ After you have added all of your desired slides, you are ready to initialize the
 ```
 gallry.init(gallry, slides, el);
 ```
+
+## Customization
+
 ### preferences(timing, easing, loop, retina)
 Preferences are not required for gallry.js to operate. If you opt out of using the preferences method on your gallery, the gallery will use default settings to handle sliding transitions and timing. The timing argument accepts a number in milliseconds. The easing argument accepts a string value. This should match style easing declarations eg. "easeInOut". The loop argument declares the ability to loop to the first slide from the last slide and vice versa. It takes a boolean value - true will allow looping, false will disable this feature. The retina argument enables takes the image source string and slices it and adds an underscored 2x to the string. This will require 2x images to be available, and as such, the file name needs to match the format. Default is set to false.
 Default values for these arguments listed in example below:
@@ -55,6 +56,6 @@ gallry.preferences(300, "ease", false, false);
 ### Get the gallry.css file
 In your html document, reference the gallry.css file before your main css file.
 ```
-<link rel="stylesheet" href="css/gallry.css"/>
+<link rel="stylesheet" href="bower_components/gallry/css/gallry.css"/>
 <link rel="stylesheet" href="css/style.css"/>
 ```
