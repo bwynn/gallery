@@ -44,7 +44,8 @@ gallry.init(gallry, slides, el);
 ```
 
 ### Get the gallry.css file
-In your html document, reference the gallry.css file before your main css file.
+In your html document, reference the gallry.css file before your main css file. To see your images, you need to define the size and width of your containing element, and then you are set to go! For proper implementation, the containing element to be targeted should be identified via it's ID attribute.
+
 ```
 <link rel="stylesheet" href="bower_components/gallry/css/gallry.css"/>
 <link rel="stylesheet" href="css/style.css"/>
@@ -69,6 +70,6 @@ gallry.preferences(300, "ease", false, false);
 ```
 
 ### backgroundCtrl(array, index, background-size, background-position)
-The backgroundCtrl method takes 4 arguments, and gives you fine grained control of how your images are displayed, similar to how you would control them via css. The first argument is the slides array that you have defined for your gallery. The second argument will be your zero-based index for the slide you would like to modify. The background-size argument takes a string value matching background-size values for css styles. 
+The backgroundCtrl method takes 4 arguments, and gives you fine grained control of how your images are displayed, similar to how you would control them via css. The first argument is the slides array that you have defined for your gallery. The second argument will be your zero-based index for the slide you would like to modify. The background-size argument takes a string value matching background-size values for css styles.
 
 The background-position argument takes a string value that matches the background-position values in css, it can take a one word string eg."top", or could take multiple values within one string eg."bottom right".
