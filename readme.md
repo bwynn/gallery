@@ -43,6 +43,13 @@ After you have added all of your desired slides, you are ready to initialize the
 gallry.init(gallry, slides, el);
 ```
 
+### Get the gallry.css file
+In your html document, reference the gallry.css file before your main css file.
+```
+<link rel="stylesheet" href="bower_components/gallry/css/gallry.css"/>
+<link rel="stylesheet" href="css/style.css"/>
+```
+
 ## Customization
 
 ### preferences(timing, easing, loop, retina)
@@ -50,12 +57,4 @@ Preferences are not required for gallry.js to operate. If you opt out of using t
 Default values for these arguments listed in example below:
 ```
 gallry.preferences(300, "ease", false, false);
-```
-
-## CSS
-### Get the gallry.css file
-In your html document, reference the gallry.css file before your main css file.
-```
-<link rel="stylesheet" href="bower_components/gallry/css/gallry.css"/>
-<link rel="stylesheet" href="css/style.css"/>
 ```
