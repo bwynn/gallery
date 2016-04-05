@@ -7,7 +7,9 @@ $phones: 480px;
 $em: 1em;
 $dark: #333;
 $light: #fff;
-$paddle-nav-height: 5.7em;
+$paddle-nav-height: $em * 5.7;
+$med-paddle-height: $em * 3;
+$med-arrows-top: $em * .5;
 
 // flex layouts
 @mixin flex {
@@ -80,6 +82,9 @@ $paddle-nav-height: 5.7em;
       opacity: 0.5;
       border-radius: 0 5px 5px 0;
       @include transition;
+      @include medium {
+        height: $med-paddle-height;
+      }
       &:hover {
         @include box-shadows(1px, 3px, $dark);
         opacity: 0.6;
@@ -121,6 +126,9 @@ $paddle-nav-height: 5.7em;
             right: 34px;
             transform: rotate(45deg);
             top: $em * .95;
+            @include medium {
+              top: $med-arrows-top;
+            }
           }
         }
         &.paddle-left {
@@ -128,12 +136,13 @@ $paddle-nav-height: 5.7em;
             transform: rotate(-135deg);
             left: 34px;
             @include medium {
-              top: $em;
+              top: $med-arrows-top;
             }
           }
         }
         @include medium {
           width: $em * 3;
+          height: $med-paddle-height;
           &::before {
             height: $em * 2;
             width: $em * 2;
@@ -142,8 +151,7 @@ $paddle-nav-height: 5.7em;
       }
     }
     @include medium {
-      min-height: $em * 3;
-      height: 10%;
+      height: $med-paddle-height;
     }
     @include small {
       display: none;
