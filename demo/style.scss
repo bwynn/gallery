@@ -5,6 +5,7 @@ $dark-yellow: #B5B368;
 $dark: #242424;
 $light: #EAE8EC;
 $small: 640px;
+$border: 2px solid $purps;
 
 @mixin small {
   @media screen and (max-width: $small) {
@@ -16,24 +17,24 @@ html,
 body {
   width: 100%;
   margin: 0;
-  color: $light;
-  background-color: $dark;
+  color: $dark;
+  background-color: $light;
   font-size: 16px;
   line-height: 1.5;
 }
 
 a {
-  color: $dark-yellow;
+  color: $purps;
   -webkit-transition: .2s all ease-in;
   transition: .2s all ease-in;
   text-decoration: underline;
   &:hover {
-    color: $yellow;
+    color: $dark-yellow;
   }
 }
 
 h1, h2 {
-  color: $dark-yellow;
+  color: $dark;
 }
 
 pre, code {
@@ -60,14 +61,18 @@ section {
   h2 {
     margin-top: 2em;
   }
+  // overwrite page-header border
+  .page-header {
+    border-bottom: $border;
+  }
 }
 
 // footer styles
 footer {
   min-height: 100px;
   margin-top: 50px;
-  background-color: $light;
-  color: $purps;
+  background-color: $dark;
+  color: $yellow;
   p {
     text-align: center;
     margin-bottom: 0;
@@ -85,4 +90,6 @@ footer {
 #attach {
   height: 600px;
   width: 100%;
+  border-top: $border;
+  border-bottom: $border;
 }

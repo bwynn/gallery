@@ -2,21 +2,21 @@ html,
 body {
   width: 100%;
   margin: 0;
-  color: #EAE8EC;
-  background-color: #242424;
+  color: #242424;
+  background-color: #EAE8EC;
   font-size: 16px;
   line-height: 1.5; }
 
 a {
-  color: #B5B368;
+  color: #654979;
   -webkit-transition: .2s all ease-in;
   transition: .2s all ease-in;
   text-decoration: underline; }
   a:hover {
-    color: #faf9d1; }
+    color: #B5B368; }
 
 h1, h2 {
-  color: #B5B368; }
+  color: #242424; }
 
 pre, code {
   background-color: #faf9d1;
@@ -33,12 +33,14 @@ header a {
 
 section h2 {
   margin-top: 2em; }
+section .page-header {
+  border-bottom: 2px solid #654979; }
 
 footer {
   min-height: 100px;
   margin-top: 50px;
-  background-color: #EAE8EC;
-  color: #654979; }
+  background-color: #242424;
+  color: #faf9d1; }
   footer p {
     text-align: center;
     margin-bottom: 0;
@@ -50,6 +52,8 @@ footer {
 
 #attach {
   height: 600px;
-  width: 100%; }
+  width: 100%;
+  border-top: 2px solid #654979;
+  border-bottom: 2px solid #654979; }
 
 /*# sourceMappingURL=style.css.map */
