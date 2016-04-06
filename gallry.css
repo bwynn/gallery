@@ -28,7 +28,7 @@
       display: block;
       height: 5.7em;
       background-color: #fff;
-      opacity: 0.5;
+      opacity: 0.3;
       border-radius: 0 5px 5px 0;
       -webkit-transition: 0.3s all ease-in-out;
       transition: 0.3s all ease-in-out; }
@@ -111,6 +111,7 @@
         margin: 0 10px;
         border: 2px solid #fff;
         border-radius: 50%;
+        box-sizing: initial;
         box-shadow: 1px 1px 1px 1px #333;
         -webkit-transition: 0.3s all ease-in-out;
         transition: 0.3s all ease-in-out; }

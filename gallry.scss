@@ -79,7 +79,7 @@ $med-arrows-top: $em * .5;
       display: block;
       height: $paddle-nav-height;
       background-color: $light;
-      opacity: 0.5;
+      opacity: 0.3;
       border-radius: 0 5px 5px 0;
       @include transition;
       @include medium {
@@ -173,6 +173,7 @@ $med-arrows-top: $em * .5;
         margin: 0 10px;
         border: 2px solid $light;
         border-radius: $hundo / 2;
+        box-sizing: initial; // this is required to not alter the dotnav elements w/ bootstrap
         @include box-shadows(1px, 1px, $dark);
         @include transition;
         &:hover {

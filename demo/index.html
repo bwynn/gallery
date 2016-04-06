@@ -1,15 +1,110 @@
 <!doctype html>
 <html>
 <head>
-  <title>Slidify</title>
+  <title>gallry.js | a js gallery slider</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="../gallry.css"/>
   <link rel="stylesheet" href="style.css"/>
-  <!-- images used for dev purposes are taken from a few photo epic series on pinkbike.com -->
 </head>
 <body>
-  <div id="attach"> <!-- Append to this container -->
+  <header>
+    <div class="container">
+      <h1>gallry.js</h1>
+      <a href="http://www.github.com/bwynn/gallery" target="_blank">Check out the repo <span class="fa fa-github fa-2x"></span></a>
+    </div>
+  </header>
+  <div id="attach"></div> <!-- end wrapping container -->
+  <article class="container">
+    <section class="overview">
+      <div class="page-header">
+        <h2>Overview</h2>
+      </div>
+      <p>Gallry.js is a light weight javascript library that generates a responsive image gallery slider that's easy to get set up and running quickly. gallry.js has customizable timing, easing, looping, retina settings, and individual slide positioning controls. It is fully responsive, with size properties declared by the container element it is appended to. gallry.js is touch enabled and developed with mobile and touch devices in mind. Adding this script to your project will allow for fully responsive galleries in mobile and desktop settings.</p>
+    </section>
+    <section class="installation">
+      <h2>Installation</h2>
+      <p>The easiest installation for gallry.js is using Bower. For more information on Bower, visit <a href="http://bower.io" target="_blank">bower here</a>. You can also simply clone this repository into your project files. The files from this library required for gallry.js to work properly are the gallry.css and gallry.js files, along with Julian Shapiro's Velocity js animation library.</p>
+      <p>Add gallry to your bower.json dependencies, or from the command line, type:</p>
+      <pre>bower install gallry</pre>
+    </section>
+    <section class="getting-started">
+      <h2>Getting Started</h2>
+      <p>Creating a new gallery is quick and easy to do. gallry.js relies on one other javascript library, <a href="https://github.com/julianshapiro/velocity" target="_blank">Velocity.js</a> authored by Julian Shapiro, to handle gallery animations. Your html file should reference the velocity.js script followed by gallry.js and then your script file.</p>
+      <code>&lt;script src="bower_components/velocity/velocity.js"&gt;&lt;/script&gt;</code><br>
+      <code>&lt;script src="bower_components/gallry/gallry.js&gt;&lt;/script&gt;</code><br>
+      <code>&lt;script src="your_script.js&gt;&lt;/script&gt;</code><br>
+      <p>Create a new instance of the gallery within your current scope.</p>
+      <pre>var gallery = gallry.gallery(); // instantiate a new gallery</pre>
+      <p>Create a gallery array variable to add your slides to. You can name it whatever you like, but this array stores the slide objects created using the addSlide method.</p>
+      <pre>var slides = [];</pre>
+      <p>Get the element you are attaching gallry.js into.</p>
+      <pre>var el = document.getElementById("gallery-container");</pre>
+      <h3>addSlide(str, str, array)</h3>
+      <p>Next, add your slides. The addSlide method on the Gallery requires several parameters. The first is a string argument with the name of the slide you're adding. Second parameter is defines the image path as a string. The third parameter is the name of the gallery array mentioned above. Using the example above, a slide instantiation would look like:</p>
+      <pre>gallry.addSlide("homer", "img/homer.jpg", slides);</pre>
+      <h3>init(object, array, element)</h3>
+      <p>After you have added all of your desired slides, you are ready to initialize the gallery. The variables declared earlier will allow us to create the gallery. Using the variables declared above, an example instantiation looks like:</p>
+      <pre>gallry.init(gallery, slides, el);</pre>
+      <h3>Get the gallry.css file</h3>
+      <p>In your html document, reference the gallry.css file before your main css file. To see your images, you need to define the height and width of your containing element, and then you are set to go! For proper implementation, the containing element to be targeted should be identified via it's ID attribute.</p>
+      <code>&lt;link rel="stylesheet" href="bower_components/gallry/css/gallry.css"/&gt;</code><br>
+      <code>&lt;link rel="stylesheet" href="css/style.css"/&gt;</code>
+    </section>
+    <section class="customization">
+      <h2>Customization</h2>
+      <h3>preferences(timing, easing, loop, retina)</h3>
+      <p>Preferences are not required for gallry.js to operate. If you opt out of using the preferences method on your gallery, the gallery will use default settings to handle sliding transitions and timing.</p>
+      <p>The timing argument accepts a number in milliseconds.</p>
+      <p>The easing argument accepts a string value. This should match style easing declarations eg. "easeInOut".</p>
+      <p>The loop argument declares the ability to loop to the first slide from the last slide and vice versa. It takes a boolean value - true will allow looping, false will disable this feature.</p>
+      <p>The retina argument takes a boolean value. When true, this argument takes the image source string, slices it and adds an underscored 2x to the string. This will require 2x images to be available, and as such, the file name needs to match the format. There is no fallback for the retina feature, so if you declare this argument "true", and no 2x assets are available or are not using the correct file format "image_2x.jpg", for example, the gallery will appear empty, and no error is thrown. Default value is set to false. If you leave this argument value as false, the 1x assets will work on both retina and non-retina viewports.</p>
+      <p>Default values for these arguments listed in example below:</p>
+      <pre>gallery.preferences(300, "ease", false, false);</pre>
+      <h3>backgroundCtrl(array, index, background-size, background-position)</h3>
+      <p>The backgroundCtrl method takes 4 arguments, and gives you fine grained control of how your images are displayed, similar to how you would control them via css. The first argument is the slides array that you have defined for your gallery. The second argument will be your zero-based index for the slide you would like to modify. The background-size argument takes a string value matching background-size values for css styles.</p>
+      <p>The background-position argument takes a string value that matches the background-position values in css, it can take a one word string eg."top", or could take multiple values within one string eg."bottom right".</p>
+      <pre>gallery.backgroundCtrl(slides, 0, "contain", "top right");</pre>
+    </section>
+    <section class="sample-prj">
+      <h2>Sample Gallery Implementation</h2>
+      <h3>javascript</h3>
+      <pre>
+var gallery = gallry.gallery(); // instantiate gallery
+var slides = []; // create an empty array to house slides
+var target = document.getElementById('bike-gallery'); // target container
 
-  </div> <!-- end wrapping container -->
+// add slides
+gallery.addSlide('bronson', 'path/to/images/sc_bronson.jpg', slides);
+gallery.addSlide('enduro', 'path/to/images/spe_enduro.jpg', slides);
+gallery.addSlide('patrol', 'path/to/images/tran_patrol.jpg', slides);
+gallery.addSlide('insurgent', 'path/to/images/evil_insurgent.jpg', slides);
+gallery.addSlide('mojo-hd', 'path/to/images/ibis_mojo_hd.jpg', slides);
+
+// modify background image properties (optional)
+gallery.backgroundCtrl(slides, 1, "cover", "center");
+gallery.backgroundCtrl(slides, 3, "contain", "bottom left");
+
+// set gallry preferences (optional)
+gallery.preferences(500, "easeInOut", false, true);
+
+// initialize the gallery
+gallery.init(gallery, slides, target);
+      </pre>
+      <h3>css</h3>
+      <pre>
+/* declare height and width properties for target element */
+#bike-gallery {
+  width: 100%;
+  height: 50vh;
+}
+      </pre>
+    </section>
+  </article>
+  <footer>
+    <p>&copy; 2016 Brian Wynn Design</p>
+    <p><small>Top gallery images were taken from a photo epic shot by Marcus Riga for <a href="http://www.pinkbike.com" target="_blank">pinkbike.com</a></small></p>
+  </footer>
   <script src="velocity.min.js"></script>
   <script src="../gallry.js"></script>
   <script src="script.js"></script>
