@@ -21,6 +21,9 @@ body {
   background-color: $light;
   font-size: 16px;
   line-height: 1.5;
+  @include small {
+    font-size: 13px;
+  }
 }
 
 a {
@@ -60,6 +63,14 @@ header {
 section {
   h2 {
     margin-top: 2em;
+    @include small {
+      font-size: 25px;
+    }
+  }
+  h3 {
+    @include small {
+      font-size: 20px;
+    }
   }
   // overwrite page-header border
   .page-header {
@@ -92,4 +103,7 @@ footer {
   width: 100%;
   border-top: $border;
   border-bottom: $border;
+  @include small {
+    height: 350px;
+  }
 }
