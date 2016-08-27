@@ -261,7 +261,7 @@ var gallry = (function() {
               el[i].style.backgroundImage = "url(" + arr[i].src + ")"; // defining gallery slide image via arr.src prop
             }
           }
-          // if prefs.retina is false, use the 1x image asset. 
+          // if prefs.retina is false, use the 1x image asset.
           else {
             el[i].style.backgroundImage = "url(" + arr[i].src + ")"; // defining gallery slide image via arr.src prop
           }
@@ -374,6 +374,7 @@ var gallry = (function() {
       var start = 0;
       var dist = [];
 
+      // advance index + 1
       cont.addEventListener("touchstart", function( e ) {
         var touchObj = e.changedTouches[0];
         var start = parseInt(touchObj.clientX);
@@ -381,6 +382,7 @@ var gallry = (function() {
         e.preventDefault();
       });
 
+      // decrement index -1
       cont.addEventListener("touchmove", function( e ) {
         var touchObj = e.changedTouches[0];
         var traveled = parseInt(touchObj.clientX) - start;
@@ -418,6 +420,41 @@ var gallry = (function() {
       });
     }
 
+    function touchScroll(arr, container) {
+
+      var cont = container.querySelector('.gallry');
+      var start = 0;
+      var dist = [];
+
+      cont.addEventListener('touchstart', function(e) {
+        var touchObj = e.changedTouches[0];
+        var start = parseInt(touchObj.clientY);
+
+        e.preventDefault();
+      });
+
+      cont.addEventListener('touchmove', function(e) {
+        var touchObj = e.changedTouches[0];
+        var traveled = parseInt(touchObj.clientY) - start;
+
+        dist.push(traveled);
+
+        e.preventDefault();
+      });
+
+      cont.addEventListener('touchend', function(e) {
+        var lastIdx = dist.length - 1;
+
+        console.log(lastIdx);
+
+        var scrolled = dist[lastIdx];
+
+        console.log(scrolled);
+
+        window.scrollBy(0, scrolled);
+      });
+    }
+
     // customize gallery characteristics
     function preferences( timing, easing, loop, retina ) {
       if ( timing ) {
@@ -446,6 +483,7 @@ var gallry = (function() {
       dotNav( arr, el ); // create dotnav
       dotNavEvent( arr, el ); // handle dotNavEvent
       swipeEvents( arr, el ); // handle touchEvents
+      touchScroll(arr, el ); // handle touch scrolling
     }
 
     return {
@@ -461,6 +499,7 @@ var gallry = (function() {
       dotNav: dotNav, // create dotnav
       dotNavEvent: dotNavEvent, // handle dotNavEvent
       swipeEvents: swipeEvents, // handle touchEvents
+      touchScroll: touchScroll, // touch scrolling
       currentSlide: currentSlide, // get currentSlide utility
       backgroundCtrl: backgroundCtrl,
     };
