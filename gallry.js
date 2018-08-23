@@ -13,8 +13,11 @@ var gallry = (function() {
       easing: "ease",
       loop: false,
       retina: false,
+      advancetimer: 0
     };
 
+    var activeTimer = null;
+    
     function addSlide( name, path, arr ) {
       // check parameters passed in are - string, string, array object
       if ( typeof name == "string" && typeof path == "string" && Array.isArray( arr )) {
@@ -254,16 +257,16 @@ var gallry = (function() {
               var str = arr[i].src;
               var first = str.slice(0, str.length - 4); // get first part of string
               var last = str.slice(str.length - 4, str.length); // get .jpg, .png, .svg, .gif files --- must be 4 character file extension
-              el[i].style.backgroundImage = "url(" + first + "_2x" + last + ")"; // defining gallery slide image via arr.src prop
+              el[i].style.backgroundImage = "url('" + first + "_2x" + last + "')"; // defining gallery slide image via arr.src prop
             }
             else {
               // if the device pixel ratio doesnt match up, use the 1x asset
-              el[i].style.backgroundImage = "url(" + arr[i].src + ")"; // defining gallery slide image via arr.src prop
+              el[i].style.backgroundImage = "url('" + arr[i].src + "')"; // defining gallery slide image via arr.src prop
             }
           }
           // if prefs.retina is false, use the 1x image asset.
           else {
-            el[i].style.backgroundImage = "url(" + arr[i].src + ")"; // defining gallery slide image via arr.src prop
+            el[i].style.backgroundImage = "url('" + arr[i].src + "')"; // defining gallery slide image via arr.src prop
           }
 
           el[i].classList.add( arr[i].name, "slide" ); // cycle through array.name values to assign as class to element
@@ -297,10 +300,12 @@ var gallry = (function() {
 
     function slideEvent( obj ) {
       function next( arr, container ) {
+        stopAdvTimer();
         advanceIndex( arr, container );
       }
 
       function prev( arr, container ) {
+        stopAdvTimer();
         previousIndex( arr, container );
       }
 
@@ -353,11 +358,13 @@ var gallry = (function() {
       if ( arr ) {
         for ( var i = 0; i < arr.length; i++ ) {
           navlink[i].addEventListener("click", function( e ) {
+            stopAdvTimer();
             activeClassState( navlink, this, arr ); // callback function
             displaySlide( arr, container );
           });
 
           navlink[i].addEventListener("touchstart", function(e) {
+            stopAdvTimer();
             activeClassState(navlink, this, arr);
             displaySlide(arr, container);
           });
@@ -420,7 +427,7 @@ var gallry = (function() {
       });
     }
 
-    function touchScroll(arr, container) {
+   function touchScroll(arr, container) {
 
       var cont = container.querySelector('.gallry');
       var start = 0;
@@ -455,9 +462,25 @@ var gallry = (function() {
       });
     }
 
+    function startAdvTimer( arr, el ) {
+      if (prefs.advancetimer > 0) {
+        activeTimer = setInterval(function() {
+            advanceIndex(arr, el);
+          }, prefs.advancetimer );
+      }
+    }
+
+    function stopAdvTimer() {
+      // stop the timer (called when user manually changes slide)
+      if (activeTimer) {
+        clearInterval(activeTimer);
+        activeTimer = null;
+      }
+    }
+
     // customize gallery characteristics
-    function preferences( timing, easing, loop, retina ) {
-      if ( timing ) {
+    function preferences( timing, easing, loop, retina, advancetimer ) {
+      if ( timing && typeof timing === "number" ) {
         prefs.timing = timing;
       }
 
@@ -469,8 +492,12 @@ var gallry = (function() {
         prefs.loop = loop;
       }
 
-      if (retina) {
+      if ( retina && typeof retina === "boolean" ) {
         prefs.retina = retina;
+      }
+
+      if ( advancetimer && typeof advancetimer === "number") {
+        prefs.advancetimer = advancetimer;
       }
       console.log(prefs);
     }
@@ -484,6 +511,7 @@ var gallry = (function() {
       dotNavEvent( arr, el ); // handle dotNavEvent
       swipeEvents( arr, el ); // handle touchEvents
       touchScroll(arr, el ); // handle touch scrolling
+      startAdvTimer( arr, el ); // Start the automatic advance timer
     }
 
     return {
