@@ -52,10 +52,10 @@ In your html document, reference the gallry.css file before your main css file. 
 
 ## Customization
 
-### preferences(timing, easing, loop, retina)
+### preferences(timing, easing, loop, retina, advancetimer)
 Preferences are not required for gallry.js to operate. If you opt out of using the preferences method on your gallery, the gallery will use default settings to handle sliding transitions and timing.
 
-The timing argument accepts a number in milliseconds.
+The timing argument accepts a number in milliseconds to control slide transitions.
 
 The easing argument accepts a string value. This should match style easing declarations eg. "easeInOut".
 
@@ -63,9 +63,11 @@ The loop argument declares the ability to loop to the first slide from the last 
 
 The retina argument takes a boolean value. When true, this argument takes the image source string, slices it and adds an underscored 2x to the string. This will require 2x images to be available, and as such, the file name needs to match the format. There is no fallback for the retina feature, so if you declare this argument "true", and no 2x assets are available or are not using the correct file format "image_2x.jpg", for example, the gallery will appear empty, and no error is thrown. Default value is set to false. If you leave this argument value as false, the 1x assets will work on both retina and non-retina viewports.
 
+The advancetimer takes a number (in milliseconds) to set the interval on an automatic slide advance timer.  If the value is set to a positive number (e.g. 3000 for 3 second advance), the timer will advance to the next slide after 3 seconds.  Once the viewer interacts with the slide controls, the timer is automatically disabled.
+
 Default values for these arguments listed in example below:
 ```
-gallery.preferences(300, "ease", false, false);
+gallery.preferences(300, "ease", false, false, 0);
 ```
 
 ### backgroundCtrl(array, index, background-size, background-position)
@@ -96,7 +98,7 @@ gallery.backgroundCtrl(slides, 1, "cover", "center");
 gallery.backgroundCtrl(slides, 3, "contain", "bottom left");
 
 // set gallry preferences (optional)
-gallery.preferences(500, "easeInOut", false, true);
+gallery.preferences(500, "easeInOut", false, true, 3000);
 
 // initialize the gallery
 gallery.init(gallery, slides, target);
